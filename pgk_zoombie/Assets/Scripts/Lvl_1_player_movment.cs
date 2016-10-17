@@ -7,10 +7,15 @@ using System.Collections;
 public class Lvl_1_player_movment : MonoBehaviour {
 
     Rigidbody rb;
-    public float speed;
+    public int speed;
     public Text countText;
     public Text speedText;
     public int count;
+
+    private float max_speed;
+    private int horizontal_speed;
+    private int vertical_speed;
+
 
     // Dodanie monety
     public void SetCountText()
@@ -24,11 +29,14 @@ public class Lvl_1_player_movment : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        set_speed(10);
+        speed = 10;
+        max_speed = 20;
         rb = GetComponent<Rigidbody>();
         count = 0; // początkowa ilośc monetek
         SetCountText();
         SetSpeedText();
+        horizontal_speed = 7;
+        vertical_speed = 5;
 	}
 	
 	// Update is called once per frame
@@ -39,29 +47,22 @@ public class Lvl_1_player_movment : MonoBehaviour {
        
     }
 
-    void set_speed(float speed)
-    {
-        this.speed = speed;
-    }
-
 
     //sterowanie graczem
     void movment()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxis("Horizontal")* horizontal_speed;
+        float moveVertical = Input.GetAxis("Vertical") * vertical_speed;
 
         Vector3 movment = new Vector3(moveHorizontal, 0, moveVertical);
 
-        Vector3 compare = new Vector3(0.0f, 0.0f, 5.0f); // do stworzenia predksoci maxymalnej ale nie dziala to za bardzo
-        
-
-        if (compare.z - movment.z > 0)
+        //maksymalna szybkosc
+        if(rb.velocity.magnitude > max_speed)
         {
-            rb.AddForce(movment * speed);
+            rb.velocity = rb.velocity.normalized* max_speed;
         }
 
-
+        rb.AddForce(movment * speed);
         
     }
     //znikanie monet
@@ -82,7 +83,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if (other.gameObject.CompareTag("Water"))
         {
             //Vector3 temp = new Vector3(0.00f,0.00f,0.15f);
-            rb.velocity = rb.velocity * 0.975f;
+            rb.velocity = rb.velocity * 0.775f;
         }
            
     }
