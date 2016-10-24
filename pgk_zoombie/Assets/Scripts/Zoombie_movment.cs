@@ -10,8 +10,9 @@ public class Zoombie_movment : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        rb = new Rigidbody();
-        zoombie_speed = 0.1f;
+        //rb = new Rigidbody();
+        rb = GetComponent<Rigidbody>(); // tak dziala nasz movment z new rigidbody nie dzialalo
+        zoombie_speed = 0.15f;
     }
 	
 	// Update is called once per frame
@@ -37,7 +38,8 @@ public class Zoombie_movment : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            zoombie_speed *= 0.5f;
+            //zoombie_speed *= 0.5f; 
+            rb.velocity = rb.velocity * 0.895f; // woda spowalnia zombiakow troche wolniej, zeby zmusic przeciwnikow do unikania jej
         }
 
     }

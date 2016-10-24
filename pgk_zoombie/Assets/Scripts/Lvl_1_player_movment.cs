@@ -15,6 +15,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     private float max_speed;
     private int horizontal_speed;
     private int vertical_speed;
+    public float Jump; // wysokosc skoku
+    bool inAir; //
 
 
     // Dodanie monety
@@ -35,15 +37,34 @@ public class Lvl_1_player_movment : MonoBehaviour {
         count = 0; // początkowa ilośc monetek
         SetCountText();
         SetSpeedText();
-        horizontal_speed = 7;
-        vertical_speed = 5;
+        horizontal_speed = 20; // stale do movment, zwieksza plynnosc
+        vertical_speed = 5; // stale do movment, zwieksza plynnosc
+        Jump = 400.0f; // wysokosc skoku
+        inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
+
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
+
+        isitinAir();
+        if (Input.GetKeyDown(KeyCode.Space) && inAir == false) // sprawdzanie przycisku spacji
+        {
+            jump();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Z) && count >= 5) // sprawdzanie przycisku spacji
+        {
+            teleport();
+            count = count - 5;
+        }
+
+
         movment();
         SetSpeedText();
+        SetCountText();
        
     }
 
@@ -62,9 +83,41 @@ public class Lvl_1_player_movment : MonoBehaviour {
             rb.velocity = rb.velocity.normalized* max_speed;
         }
 
-        rb.AddForce(movment * speed);
+        if (rb.velocity.magnitude > max_speed / 2.0f)
+        {
+            rb.AddForce(movment * 2.5f);
+        }
+        else
+        {
+             rb.AddForce(movment * speed);
+        }
+       
         
     }
+
+
+    //skakanie 
+    void jump()
+    {
+        rb.AddForce(Vector3.up * Jump);
+    }
+    void isitinAir()
+    {
+        if (rb.velocity.y < 0.17 && rb.velocity.y > -0.17)
+        {
+            inAir = false;
+        }
+        else
+        {
+            inAir = true;
+        }
+    }
+    void teleport()
+    {
+        this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);       
+    }
+
+
     //znikanie monet
     public void OnTriggerEnter(Collider other)
     {
@@ -72,19 +125,24 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             count++;
-            SetCountText();
         }
         
     }
+
+
 
     // woda - spowalniacz
    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            //Vector3 temp = new Vector3(0.00f,0.00f,0.15f);
-            rb.velocity = rb.velocity * 0.775f;
+            rb.velocity = rb.velocity * 0.885f;
         }
            
     }
+
+
+    
+
+
 }
