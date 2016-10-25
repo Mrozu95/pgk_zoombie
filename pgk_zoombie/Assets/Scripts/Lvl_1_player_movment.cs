@@ -8,6 +8,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     Rigidbody rb;
     public int speed;
+    public int health;
     public Text countText;
     public Text speedText;
     public int count;
@@ -16,8 +17,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     private int horizontal_speed;
     private int vertical_speed;
     public float Jump; // wysokosc skoku
-    bool inAir; //
-
+    bool inAir;
 
     // Dodanie monety
     public void SetCountText()
@@ -28,11 +28,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         speedText.text = "Speed : " + rb.velocity.ToString();
     }
+
     // Use this for initialization
     void Start ()
     {
         speed = 10;
         max_speed = 20;
+        health = Health.currentHealth;
         rb = GetComponent<Rigidbody>();
         count = 0; // początkowa ilośc monetek
         SetCountText();
@@ -61,13 +63,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
             count = count - 5;
         }
 
-
         movment();
         SetSpeedText();
         SetCountText();
-       
     }
-
 
     //sterowanie graczem
     void movment()
@@ -95,7 +94,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         
     }
 
-
     //skakanie 
     void jump()
     {
@@ -112,11 +110,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
             inAir = true;
         }
     }
+
     void teleport()
     {
         this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);       
     }
-
 
     //znikanie monet
     public void OnTriggerEnter(Collider other)
@@ -129,10 +127,17 @@ public class Lvl_1_player_movment : MonoBehaviour {
         
     }
 
-
+    //jeszcze nie odejmuje HP
+    public void OnCollisionEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Zombie"))
+        {
+            Health.subtractHealth(10);
+        }
+    }
 
     // woda - spowalniacz
-   void OnTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Water"))
         {
@@ -140,9 +145,4 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
            
     }
-
-
-    
-
-
 }

@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Camera_movment.cs" />
     <Compile Include="Assets\Scripts\Coin_script.cs" />
+    <Compile Include="Assets\Scripts\Health.cs" />
+    <Compile Include="Assets\Scripts\HealthGUI.cs" />
     <Compile Include="Assets\Scripts\Lvl_1_player_movment.cs" />
     <Compile Include="Assets\Scripts\Walls_destrucion.cs" />
     <Compile Include="Assets\Scripts\Zoombie_movment.cs" />
