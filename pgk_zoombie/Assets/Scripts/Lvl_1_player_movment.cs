@@ -8,9 +8,9 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     Rigidbody rb;
     public int speed;
-    public int health;
     public Text countText;
     public Text speedText;
+    public Slider slider;
     public int count;
 
     private float max_speed;
@@ -24,9 +24,15 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         countText.text = "Monety : " + count.ToString();
     }
+
     public void SetSpeedText()
     {
         speedText.text = "Speed : " + rb.velocity.ToString();
+    }
+
+    public void SetSlider()
+    {
+        slider.value = Health.currentHealth;
     }
 
     // Use this for initialization
@@ -34,28 +40,25 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         speed = 10;
         max_speed = 20;
-        health = Health.currentHealth;
         rb = GetComponent<Rigidbody>();
         count = 0; // początkowa ilośc monetek
         SetCountText();
         SetSpeedText();
+        SetSlider();
         horizontal_speed = 20; // stale do movment, zwieksza plynnosc
         vertical_speed = 5; // stale do movment, zwieksza plynnosc
         Jump = 400.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
-
-	}
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-
         isitinAir();
         if (Input.GetKeyDown(KeyCode.Space) && inAir == false) // sprawdzanie przycisku spacji
         {
             jump();
         }
-
 
         if (Input.GetKeyDown(KeyCode.Z) && count >= 5) // sprawdzanie przycisku spacji
         {
@@ -66,6 +69,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         movment();
         SetSpeedText();
         SetCountText();
+        SetSlider();
     }
 
     //sterowanie graczem
@@ -89,9 +93,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         else
         {
              rb.AddForce(movment * speed);
-        }
-       
-        
+        }    
     }
 
     //skakanie 
@@ -99,6 +101,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         rb.AddForce(Vector3.up * Jump);
     }
+
     void isitinAir()
     {
         if (rb.velocity.y < 0.17 && rb.velocity.y > -0.17)
@@ -124,13 +127,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
             other.gameObject.SetActive(false);
             count++;
         }
-        
     }
 
-    //jeszcze nie odejmuje HP
-    public void OnCollisionEnter(Collider other)
+    // kontakt z zombie zmniejsza pasek życia
+    public void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Zombie"))
+        if (collision.gameObject.CompareTag("Zombie"))
         {
             Health.subtractHealth(10);
         }
@@ -142,7 +144,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if (other.gameObject.CompareTag("Water"))
         {
             rb.velocity = rb.velocity * 0.885f;
-        }
-           
+        }        
     }
 }
