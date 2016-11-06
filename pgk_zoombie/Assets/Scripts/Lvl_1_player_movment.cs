@@ -11,18 +11,19 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Text countText;
     public Text speedText;
     public Slider slider;
-    public int count;
+    public int coins_count;
 
     private float max_speed;
     private int horizontal_speed;
     private int vertical_speed;
     public float Jump; // wysokosc skoku
     bool inAir;
+    bool canBeHitted; // czy mozna nas uderzyc
 
     // Dodanie monety
     public void SetCountText()
     {
-        countText.text = "Monety : " + count.ToString();
+        countText.text = "Monety : " + coins_count.ToString();
     }
 
     public void SetSpeedText()
@@ -36,12 +37,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         speed = 10;
         max_speed = 20;
         rb = GetComponent<Rigidbody>();
-        count = 0; // początkowa ilośc monetek
+        coins_count = 0; // początkowa ilośc monetek
         SetCountText();
         SetSpeedText();
         SetSlider();
@@ -49,10 +50,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
         vertical_speed = 5; // stale do movment, zwieksza plynnosc
         Jump = 400.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
+        canBeHitted = true;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+
+    // Update is called once per frame
+    void FixedUpdate()
     {
         isitinAir();
         if (Input.GetKeyDown(KeyCode.Space) && inAir == false) // sprawdzanie przycisku spacji
@@ -60,10 +62,22 @@ public class Lvl_1_player_movment : MonoBehaviour {
             jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && count >= 5) // sprawdzanie przycisku spacji
+        if (Input.GetKeyDown(KeyCode.Z) && coins_count >= 5) // sprawdzanie przycisku Z
         {
             teleport();
-            count = count - 5;
+            coins_count = coins_count - 5;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
+        {
+            Push_back();
+            coins_count -= 3;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) && coins_count >= 3) // sprawdzanie przycisku C
+        {
+           coins_count -= 3;
+           StartCoroutine(invulnerable());
         }
 
         movment();
@@ -75,15 +89,15 @@ public class Lvl_1_player_movment : MonoBehaviour {
     //sterowanie graczem
     void movment()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal")* horizontal_speed;
+        float moveHorizontal = Input.GetAxis("Horizontal") * horizontal_speed;
         float moveVertical = Input.GetAxis("Vertical") * vertical_speed;
 
         Vector3 movment = new Vector3(moveHorizontal, 0, moveVertical);
 
         //maksymalna szybkosc
-        if(rb.velocity.magnitude > max_speed)
+        if (rb.velocity.magnitude > max_speed)
         {
-            rb.velocity = rb.velocity.normalized* max_speed;
+            rb.velocity = rb.velocity.normalized * max_speed;
         }
 
         if (rb.velocity.magnitude > max_speed / 2.0f)
@@ -92,8 +106,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         else
         {
-             rb.AddForce(movment * speed);
-        }    
+            rb.AddForce(movment * speed);
+        }
     }
 
     //skakanie 
@@ -116,7 +130,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     void teleport()
     {
-        this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);       
+        this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);
     }
 
     //znikanie monet
@@ -125,17 +139,21 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if (other.gameObject.CompareTag("Coin"))
         {
             other.gameObject.SetActive(false);
-            count++;
+            coins_count++;
         }
     }
 
     // kontakt z zombie zmniejsza pasek życia
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Zombie"))
+        if (canBeHitted)
         {
-            Health.subtractHealth(10);
+            if (collision.gameObject.CompareTag("Zombie"))
+            {
+                Health.subtractHealth(10);
+            }
         }
+
     }
 
     // woda - spowalniacz
@@ -144,6 +162,39 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if (other.gameObject.CompareTag("Water"))
         {
             rb.velocity = rb.velocity * 0.885f;
-        }        
+        }
     }
+
+
+    //odepchniecie. Działa całkiem fajnie, ewentualnie dostosować promień i moc
+    public void Push_back()
+    {
+        float radius = 50.0F;
+        float power = 1000.0F;
+
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)
+        {
+            if (hit.CompareTag("Zombie"))
+            {
+                Rigidbody rb2 = hit.GetComponent<Rigidbody>();
+
+                if (rb2 != null)
+                    rb2.AddExplosionForce(power, explosionPos, radius, 3.0F);
+            }
+
+        }
+    }
+
+    // niewrazliwosc na x sekund
+    public IEnumerator invulnerable()
+    {
+        float x_seconds = 3.0f;
+
+        canBeHitted = false;
+        yield return new WaitForSeconds(x_seconds);
+        canBeHitted = true;
+    }
+
 }
