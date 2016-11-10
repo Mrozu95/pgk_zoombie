@@ -6,12 +6,14 @@ using System.Collections;
 
 public class Lvl_1_player_movment : MonoBehaviour {
 
-    Rigidbody rb;
+    public Rigidbody rb;
     public int speed;
     public Text countText;
     public Text speedText;
     public Slider slider;
     public int coins_count;
+    public GameObject summon;
+    public Transform spawnPoint;
 
     private float max_speed;
     private int horizontal_speed;
@@ -51,6 +53,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         Jump = 400.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
         canBeHitted = true;
+        
     }
 
     // Update is called once per frame
@@ -70,7 +73,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
         {
-            Push_back();
+            Push_back(50,1000);
             coins_count -= 3;
         }
 
@@ -80,10 +83,15 @@ public class Lvl_1_player_movment : MonoBehaviour {
            StartCoroutine(invulnerable());
         }
 
-        movment();
-        SetSpeedText();
-        SetCountText();
-        SetSlider();
+        if(Health.currentHealth > 0 || rb.position.z < 1070)
+        {
+            movment();
+            SetSpeedText();
+            SetCountText();
+            SetSlider();
+        }
+
+        
     }
 
     //sterowanie graczem
@@ -110,6 +118,15 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
     }
 
+
+    
+
+
+    public void spawn()
+    {
+        Instantiate(summon, spawnPoint.position, spawnPoint.rotation);
+    }
+
     //skakanie 
     void jump()
     {
@@ -134,6 +151,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     //znikanie monet
+    // spawn zombie
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Coin"))
@@ -141,6 +159,14 @@ public class Lvl_1_player_movment : MonoBehaviour {
             other.gameObject.SetActive(false);
             coins_count++;
         }
+        if (other.gameObject.CompareTag("Spawn"))
+        {
+            for(int i=0; i<5; i++)
+            {
+                spawn();
+            }                      
+        }
+      
     }
 
     // kontakt z zombie zmniejsza pasek życia
@@ -150,27 +176,34 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             if (collision.gameObject.CompareTag("Zombie"))
             {
-                Health.subtractHealth(10);
+                Health.subtractHealth(10);           
+
+           
+
             }
         }
 
     }
 
     // woda - spowalniacz
+   
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Water"))
         {
             rb.velocity = rb.velocity * 0.885f;
         }
+        
+
     }
 
+    
+   
 
     //odepchniecie. Działa całkiem fajnie, ewentualnie dostosować promień i moc
-    public void Push_back()
+    public void Push_back(float radius, float power)
     {
-        float radius = 50.0F;
-        float power = 1000.0F;
+        
 
         Vector3 explosionPos = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);

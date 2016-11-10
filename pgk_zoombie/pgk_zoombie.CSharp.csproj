@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Camera_movment.cs" />
     <Compile Include="Assets\Scripts\Coin_script.cs" />
+    <Compile Include="Assets\Scripts\Finish.cs" />
     <Compile Include="Assets\Scripts\GameOver.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\Lvl_1_player_movment.cs" />
