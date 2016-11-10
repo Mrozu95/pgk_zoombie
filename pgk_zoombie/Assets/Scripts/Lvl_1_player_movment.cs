@@ -6,6 +6,7 @@ using System.Collections;
 
 public class Lvl_1_player_movment : MonoBehaviour {
 
+
     public Rigidbody rb;
     public int speed;
     public Text countText;
@@ -21,6 +22,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public float Jump; // wysokosc skoku
     bool inAir;
     bool canBeHitted; // czy mozna nas uderzyc
+    
+
+
+    
 
     // Dodanie monety
     public void SetCountText()
@@ -57,7 +62,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         isitinAir();
         if (Input.GetKeyDown(KeyCode.Space) && inAir == false) // sprawdzanie przycisku spacji
@@ -119,7 +124,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
 
-    
 
 
     public void spawn()
@@ -176,9 +180,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             if (collision.gameObject.CompareTag("Zombie"))
             {
-                Health.subtractHealth(10);           
+                Health.subtractHealth(10);
+                
 
-           
+
 
             }
         }
