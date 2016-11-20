@@ -73,7 +73,6 @@ public class Zoombie_movment : MonoBehaviour {
         {     
             stop = true;
         }
-
         return stop;
 
     }

@@ -8,24 +8,25 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
 
     public Rigidbody rb;
-    public int speed;
-    public Text countText;
-    public Text speedText;
-    public Slider slider;
-    public int coins_count;
-    public GameObject summon;
-    public Transform spawnPoint;
+    private Vector3 movementDirection;
 
+    public int speed;
     private float max_speed;
     private int horizontal_speed;
     private int vertical_speed;
     public float Jump; // wysokosc skoku
     bool inAir;
     bool canBeHitted; // czy mozna nas uderzyc
-    
 
+    public Text countText;
+    public Text speedText;
+    public Slider slider;
 
-    
+    public int coins_count;
+
+    public GameObject summon;
+    public Transform spawnPoint;
+
 
     // Dodanie monety
     public void SetCountText()
@@ -57,7 +58,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
         vertical_speed = 5; // stale do movment, zwieksza plynnosc
         Jump = 400.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
-        canBeHitted = true;
+        canBeHitted = false;
+        movementDirection = new Vector3();
         
     }
 
@@ -90,7 +92,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if(Health.currentHealth > 0 || rb.position.z < 1070)
         {
-            movment();
+            movement1();
             SetSpeedText();
             SetCountText();
             SetSlider();
@@ -100,12 +102,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     //sterowanie graczem
-    void movment()
+    void movement2()
     {
         float moveHorizontal = Input.GetAxis("Horizontal") * horizontal_speed;
         float moveVertical = Input.GetAxis("Vertical") * vertical_speed;
 
-        Vector3 movment = new Vector3(moveHorizontal, 0, moveVertical);
+        movementDirection.Set(moveHorizontal, 0, moveVertical);
 
         //maksymalna szybkosc
         if (rb.velocity.magnitude > max_speed)
@@ -115,12 +117,23 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if (rb.velocity.magnitude > max_speed / 2.0f)
         {
-            rb.AddForce(movment * 2.5f);
+            rb.AddForce(movementDirection * 2.5f);
         }
         else
         {
-            rb.AddForce(movment * speed);
+            rb.AddForce(movementDirection * speed);
         }
+    }
+
+    void movement1() //stabilniejsze sterowanie
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+
+        movementDirection.Set(moveHorizontal, 0, moveVertical);
+        movementDirection = movementDirection.normalized * 20 * Time.deltaTime; //20 - szybkosc
+        rb.MovePosition(transform.position + movementDirection);
     }
 
 
@@ -181,10 +194,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
             if (collision.gameObject.CompareTag("Zombie"))
             {
                 Health.subtractHealth(10);
-                
-
-
-
             }
         }
 
