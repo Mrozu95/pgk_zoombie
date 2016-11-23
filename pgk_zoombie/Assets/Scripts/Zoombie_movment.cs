@@ -29,8 +29,7 @@ public class Zoombie_movment : MonoBehaviour {
             this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.07f);
             haltnichtsitzen();
             
-        }
-        
+        }      
 	}
 
     //pausa po hicie
@@ -63,7 +62,6 @@ public class Zoombie_movment : MonoBehaviour {
             //zoombie_speed *= 0.5f; 
             rb.velocity = rb.velocity * 0.895f; // woda spowalnia zombiakow troche wolniej, zeby zmusic przeciwnikow do unikania jej
         }
-
     }
 
     // zombi zatrzymuje sie po hicie
@@ -74,6 +72,5 @@ public class Zoombie_movment : MonoBehaviour {
             stop = true;
         }
         return stop;
-
     }
 }

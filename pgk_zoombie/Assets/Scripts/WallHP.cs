@@ -8,20 +8,20 @@ public class WallHP : MonoBehaviour {
     void Start () {
         HP = 100;
         
-}
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-    public void OnCollisionEnter(Collider zombie)
-    {
-        if (zombie.gameObject.CompareTag("Zombie"))
-        {
-            HP -= 10;
-            if (HP <= 0)
-                this.gameObject.SetActive(false);
-        }
-    }
+    //public void OnCollisionEnter(Collider zombie)
+    //{
+       // if (zombie.gameObject.CompareTag("Zombie"))
+        //{
+           // HP -= 10;
+            //if (HP <= 0)
+                //this.gameObject.SetActive(false);
+        //}
+    //}
 }

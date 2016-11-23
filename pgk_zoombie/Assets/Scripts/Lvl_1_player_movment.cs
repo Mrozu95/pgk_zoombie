@@ -58,7 +58,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         vertical_speed = 5; // stale do movment, zwieksza plynnosc
         Jump = 400.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
-        canBeHitted = false;
+        canBeHitted = true;
         movementDirection = new Vector3();
         
     }
@@ -98,7 +98,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
             SetSlider();
         }
 
-        
+        if(inAir == false)
+        {
+            rb.velocity = rb.velocity * 0.0f;
+        }
     }
 
     //sterowanie graczem
@@ -130,14 +133,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-
         movementDirection.Set(moveHorizontal, 0, moveVertical);
-        movementDirection = movementDirection.normalized * 20 * Time.deltaTime; //20 - szybkosc
+        movementDirection = movementDirection * 20 * Time.deltaTime; //20 - szybkosc
         rb.MovePosition(transform.position + movementDirection);
     }
-
-
-
 
     public void spawn()
     {
@@ -183,7 +182,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 spawn();
             }                      
         }
-      
     }
 
     // kontakt z zombie zmniejsza pasek życia
@@ -196,29 +194,21 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 Health.subtractHealth(10);
             }
         }
-
     }
 
-    // woda - spowalniacz
-   
+    // woda - spowalniacz  
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            rb.velocity = rb.velocity * 0.885f;
+            movementDirection = -movementDirection * 20 * Time.deltaTime; //20 - szybkosc
+            rb.MovePosition(transform.position + movementDirection);
         }
-        
-
     }
-
-    
-   
 
     //odepchniecie. Działa całkiem fajnie, ewentualnie dostosować promień i moc
     public void Push_back(float radius, float power)
     {
-        
-
         Vector3 explosionPos = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
         foreach (Collider hit in colliders)
@@ -230,7 +220,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 if (rb2 != null)
                     rb2.AddExplosionForce(power, explosionPos, radius, 3.0F);
             }
-
         }
     }
 
@@ -243,5 +232,4 @@ public class Lvl_1_player_movment : MonoBehaviour {
         yield return new WaitForSeconds(x_seconds);
         canBeHitted = true;
     }
-
 }
