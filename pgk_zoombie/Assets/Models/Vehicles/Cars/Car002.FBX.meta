@@ -1,0 +1,215 @@
+fileFormatVersion: 2
+guid: 627c37ee746279a4b930db594c01542f
+timeCreated: 1480110059
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Base
+    100002: Bolt_01
+    100004: Bolt_01_2
+    100006: Bolt_02
+    100008: Bolt_02_2
+    100010: Bolt_03
+    100012: Bolt_03_2
+    100014: Bolt_04
+    100016: Bolt_04_2
+    100018: Bumper_01
+    100020: //RootNode
+    100022: front_left_turn_signal
+    100024: front_left_turn_signal_1
+    100026: front_lights_01
+    100028: front_lights_01_1
+    100030: Grid
+    100032: Group001
+    100034: Left_Back
+    100036: Left_Front
+    100038: lights_brakes__
+    100040: lights_brakes___2
+    100042: Main
+    100044: Main_2
+    100046: muffler
+    100048: Right_Back
+    100050: Right_Front
+    100052: turn_signals_1
+    100054: turn_signals_1_2
+    100056: Wheel_01
+    100058: Wheel_02
+    100060: Wheel_03
+    100062: Wheel_04
+    400000: Base
+    400002: Bolt_01
+    400004: Bolt_01_2
+    400006: Bolt_02
+    400008: Bolt_02_2
+    400010: Bolt_03
+    400012: Bolt_03_2
+    400014: Bolt_04
+    400016: Bolt_04_2
+    400018: Bumper_01
+    400020: //RootNode
+    400022: front_left_turn_signal
+    400024: front_left_turn_signal_1
+    400026: front_lights_01
+    400028: front_lights_01_1
+    400030: Grid
+    400032: Group001
+    400034: Left_Back
+    400036: Left_Front
+    400038: lights_brakes__
+    400040: lights_brakes___2
+    400042: Main
+    400044: Main_2
+    400046: muffler
+    400048: Right_Back
+    400050: Right_Front
+    400052: turn_signals_1
+    400054: turn_signals_1_2
+    400056: Wheel_01
+    400058: Wheel_02
+    400060: Wheel_03
+    400062: Wheel_04
+    2300000: Base
+    2300002: Bolt_01
+    2300004: Bolt_01_2
+    2300006: Bolt_02
+    2300008: Bolt_02_2
+    2300010: Bolt_03
+    2300012: Bolt_03_2
+    2300014: Bolt_04
+    2300016: Bolt_04_2
+    2300018: Bumper_01
+    2300020: front_left_turn_signal
+    2300022: front_left_turn_signal_1
+    2300024: front_lights_01
+    2300026: front_lights_01_1
+    2300028: Grid
+    2300030: Left_Back
+    2300032: Left_Front
+    2300034: lights_brakes__
+    2300036: lights_brakes___2
+    2300038: Main
+    2300040: Main_2
+    2300042: muffler
+    2300044: Right_Back
+    2300046: Right_Front
+    2300048: turn_signals_1
+    2300050: turn_signals_1_2
+    3300000: Base
+    3300002: Bolt_01
+    3300004: Bolt_01_2
+    3300006: Bolt_02
+    3300008: Bolt_02_2
+    3300010: Bolt_03
+    3300012: Bolt_03_2
+    3300014: Bolt_04
+    3300016: Bolt_04_2
+    3300018: Bumper_01
+    3300020: front_left_turn_signal
+    3300022: front_left_turn_signal_1
+    3300024: front_lights_01
+    3300026: front_lights_01_1
+    3300028: Grid
+    3300030: Left_Back
+    3300032: Left_Front
+    3300034: lights_brakes__
+    3300036: lights_brakes___2
+    3300038: Main
+    3300040: Main_2
+    3300042: muffler
+    3300044: Right_Back
+    3300046: Right_Front
+    3300048: turn_signals_1
+    3300050: turn_signals_1_2
+    4300000: Bumper_01
+    4300002: Grid
+    4300004: front_left_turn_signal
+    4300006: muffler
+    4300008: front_lights_01
+    4300010: front_lights_01_1
+    4300012: front_left_turn_signal_1
+    4300014: Bolt_01_2
+    4300016: Bolt_04_2
+    4300018: Bolt_03_2
+    4300020: Bolt_02_2
+    4300022: Main_2
+    4300024: Right_Back
+    4300026: Left_Front
+    4300028: Bolt_02
+    4300030: Left_Back
+    4300032: Bolt_04
+    4300034: Right_Front
+    4300036: Bolt_01
+    4300038: Main
+    4300040: Bolt_03
+    4300042: Base
+    4300044: lights_brakes___2
+    4300046: turn_signals_1_2
+    4300048: lights_brakes__
+    4300050: turn_signals_1
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
