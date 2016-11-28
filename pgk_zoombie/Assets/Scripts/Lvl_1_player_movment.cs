@@ -27,6 +27,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public GameObject summon;
     public Transform spawnPoint;
 
+    public GameObject truck2;
+    public Transform truckSpawn;
 
     // Dodanie monety
     public void SetCountText()
@@ -140,7 +142,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void spawn()
     {
-        Instantiate(summon, spawnPoint.position, spawnPoint.rotation);
+        Instantiate(summon, new Vector3(spawnPoint.position.x + 15, spawnPoint.position.y, spawnPoint.position.z), spawnPoint.rotation);
+    }
+
+    public void spawnTruck2()
+    {
+        Instantiate(truck2, truckSpawn.position, truckSpawn.rotation);
     }
 
     //skakanie 
@@ -166,6 +173,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);
     }
 
+
     //znikanie monet
     // spawn zombie
     public void OnTriggerEnter(Collider other)
@@ -177,11 +185,16 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Spawn"))
         {
-            for(int i=0; i<5; i++)
+            for(int i=0; i<100; i++)
             {
                 spawn();
             }                      
         }
+        if (other.gameObject.CompareTag("MoveTruck"))
+        {
+            spawnTruck2();
+        }
+
     }
 
     // kontakt z zombie zmniejsza pasek życia
