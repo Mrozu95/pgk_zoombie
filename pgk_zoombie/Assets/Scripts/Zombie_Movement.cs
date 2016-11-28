@@ -15,7 +15,7 @@ public class Zombie_Movement : MonoBehaviour {
     {
         //rb = new Rigidbody();
         rb = GetComponent<Rigidbody>(); // tak dziala nasz movment z new rigidbody nie dzialalo
-        zoombie_speed = 0.15f;
+        zoombie_speed = 0.18f;
         stop = false;
     }
 
@@ -74,6 +74,10 @@ public class Zombie_Movement : MonoBehaviour {
             stop = true;
         }
         if (collision.gameObject.CompareTag("Truck"))
+        {
+            this.gameObject.SetActive(false);
+        }
+        if(collision.gameObject.CompareTag("KillingPlane"))
         {
             this.gameObject.SetActive(false);
         }
