@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 3b37530772fbbb441b40078e356e44b3
+timeCreated: 1480360011
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -47,11 +49,11 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 4
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -69,7 +71,7 @@ ModelImporter:
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
-  additionalBone: 1
+  additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
