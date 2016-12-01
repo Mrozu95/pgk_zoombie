@@ -17,7 +17,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public float Jump; // wysokosc skoku
     bool inAir;
     bool canBeHitted; // czy mozna nas uderzyc
-    bool slowed;
+    bool slowed; // zmienna do spowalniaczy/wody
+
+
+    public Image damageImage; // do migniecia po uderzeniu
+    public float flashSpeed = 5.0f;
+    public Color flashColour = new Color(1.0f, 0.0f, 0.0f, 0.1f);
 
 
     public Text countText;
@@ -40,7 +45,16 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void SetSpeedText()
     {
-        speedText.text = "Speed : " + rb.velocity.ToString();
+        double distanceCovered = System.Math.Round(rb.position.z / 434 * 100);
+        if (distanceCovered < 0)
+        {
+            distanceCovered = 0;
+        }
+        else if (distanceCovered > 100)
+        {
+            distanceCovered = 100;
+        }
+        speedText.text = "Map Covered: " + System.Math.Round(rb.position.z / 434 * 100) + "%";
     }
 
     public void SetSlider()
@@ -107,6 +121,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             rb.velocity = rb.velocity * 0.0f;
         }
+        damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
     }
 
     //sterowanie graczem
@@ -218,6 +233,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             if (collision.gameObject.CompareTag("Zombie"))
             {
                 Health.subtractHealth(10);
+                damageImage.color = flashColour;
             }
             if (collision.gameObject.CompareTag("Truck"))
             {
