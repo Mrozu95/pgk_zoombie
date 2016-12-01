@@ -16,7 +16,7 @@ public class Finish : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(player.position.z > 425.5)
+        if(player.position.z > 430.5)
         anim.SetTrigger("Finish");
     }
 }
