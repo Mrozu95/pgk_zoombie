@@ -11,7 +11,7 @@ public class TruckMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(canMove)
-        transform.position = new Vector3(this.transform.position.x + 0.61f, this.transform.position.y, this.transform.position.z);
+        transform.position = new Vector3(this.transform.position.x + 0.58f, this.transform.position.y, this.transform.position.z);
 	}
 
     public void setCanMove(bool can)

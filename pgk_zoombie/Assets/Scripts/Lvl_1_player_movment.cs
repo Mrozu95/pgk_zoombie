@@ -17,6 +17,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public float Jump; // wysokosc skoku
     bool inAir;
     bool canBeHitted; // czy mozna nas uderzyc
+    bool slowed;
+
 
     public Text countText;
     public Text speedText;
@@ -61,6 +63,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         Jump = 400.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
         canBeHitted = true;
+        slowed = false;
         movementDirection = new Vector3();
         
     }
@@ -135,9 +138,21 @@ public class Lvl_1_player_movment : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        movementDirection.Set(moveHorizontal, 0, moveVertical);
-        movementDirection = movementDirection * 20 * Time.deltaTime; //20 - szybkosc
-        rb.MovePosition(transform.position + movementDirection);
+        if(slowed==false)
+        {
+            movementDirection.Set(moveHorizontal, 0, moveVertical);
+            movementDirection = movementDirection * 20 * Time.deltaTime; //20 - szybkosc
+            rb.MovePosition(transform.position + movementDirection);
+        }
+        else
+        {
+            movementDirection.Set(moveHorizontal, 0, moveVertical);
+            movementDirection = movementDirection * 5 * Time.deltaTime; //20 - szybkosc
+            rb.MovePosition(transform.position + movementDirection);
+            slowed = false;
+        }
+
+       
     }
 
     public void spawn()
@@ -147,7 +162,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void spawnTruck2()
     {
-        Instantiate(truck2, truckSpawn.position, truckSpawn.rotation);
+        Instantiate(truck2, new Vector3(truckSpawn.position.x, truckSpawn.position.y, truckSpawn.position.z), truckSpawn.rotation);
     }
 
     //skakanie 
@@ -188,12 +203,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
             for(int i=0; i<100; i++)
             {
                 spawn();
-            }                      
-        }
-        if (other.gameObject.CompareTag("MoveTruck"))
-        {
+            }
             spawnTruck2();
         }
+        
 
     }
 
@@ -206,6 +219,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
             {
                 Health.subtractHealth(10);
             }
+            if (collision.gameObject.CompareTag("Truck"))
+            {
+                Health.subtractHealth(100);
+            }
         }
     }
 
@@ -214,8 +231,9 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            movementDirection = -movementDirection * 20 * Time.deltaTime; //20 - szybkosc
-            rb.MovePosition(transform.position + movementDirection);
+
+            slowed = true;
+
         }
     }
 

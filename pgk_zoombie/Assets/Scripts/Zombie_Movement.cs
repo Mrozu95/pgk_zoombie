@@ -15,7 +15,7 @@ public class Zombie_Movement : MonoBehaviour {
     {
         //rb = new Rigidbody();
         rb = GetComponent<Rigidbody>(); // tak dziala nasz movment z new rigidbody nie dzialalo
-        zoombie_speed = 0.18f;
+        zoombie_speed = 0.14f;
         stop = false;
     }
 
