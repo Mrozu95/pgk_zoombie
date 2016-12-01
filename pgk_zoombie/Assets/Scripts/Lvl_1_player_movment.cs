@@ -24,7 +24,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Text speedText;
     public Slider slider;
 
-    public int coins_count;
+    public static int coins_count;
 
     public GameObject summon;
     public Transform spawnPoint;
