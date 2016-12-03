@@ -2,20 +2,23 @@
 using System.Collections;
 
 public class TruckMovement : MonoBehaviour {
-    public bool canMove = false;
+
 	// Use this for initialization
 	void Start () {
-	
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(canMove)
-        transform.position = new Vector3(this.transform.position.x + 0.58f, this.transform.position.y, this.transform.position.z);
-	}
-
-    public void setCanMove(bool can)
-    {
-        canMove = can;
+        
+        transform.position = new Vector3(this.transform.position.x + 1.0f, this.transform.position.y, this.transform.position.z);
+        back();
     }
+
+    void back()
+    {
+        if (this.transform.position.x >= 35)
+            transform.position = new Vector3(-30, this.transform.position.y, this.transform.position.z);
+    }
+   
 }

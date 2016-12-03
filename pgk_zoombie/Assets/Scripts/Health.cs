@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        currentHealth = 100;
+        currentHealth = 200;
     }
 
     // Update is called once per frame

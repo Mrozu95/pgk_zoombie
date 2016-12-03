@@ -185,15 +185,16 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
         {
-            Push_back(50, 1000);
+            StartCoroutine( Push_back(50, 1000));
             coins_count -= 3;
         }
 
         if (Input.GetKeyDown(KeyCode.C) && coins_count >= 3) // sprawdzanie przycisku C
         {
             coins_count -= 3;
-            StartCoroutine(invulnerable());
+            StartCoroutine(invulnerable(3.0f));
         }
+       
     }
 
 
@@ -299,6 +300,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             for (int i = 0; i < 100; i++)
             {
                 spawn2();
+                other.enabled = false;
             }
         }
         if (other.gameObject.CompareTag("Spawn2"))
@@ -342,8 +344,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     //odepchniecie. Działa całkiem fajnie, ewentualnie dostosować promień i moc
-    public void Push_back(float radius, float power)
+    public IEnumerator Push_back(float radius, float power)
     {
+        canBeHitted = false;
+        yield return new WaitForSeconds(1.5f);
+        canBeHitted = true;
         Vector3 explosionPos = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
         foreach (Collider hit in colliders)
@@ -359,10 +364,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     // niewrazliwosc na x sekund
-    public IEnumerator invulnerable()
+    public IEnumerator invulnerable(float x_seconds)
     {
-        float x_seconds = 3.0f;
-
         canBeHitted = false;
         yield return new WaitForSeconds(x_seconds);
         canBeHitted = true;
