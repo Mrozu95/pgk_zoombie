@@ -17,6 +17,7 @@ public class Zombie_Movement : MonoBehaviour {
         rb = GetComponent<Rigidbody>(); // tak dziala nasz movment z new rigidbody nie dzialalo
         zoombie_speed = 0.14f;
         stop = false;
+        UIManager.pauseState = false;
     }
 
     // Update is called once per frame
@@ -26,11 +27,10 @@ public class Zombie_Movement : MonoBehaviour {
         {
             movment();
         }
-        else
+        else if (stop == true && UIManager.pauseState == false)
         {
             this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.07f);
             haltnichtsitzen();
-
         }
     }
 
@@ -46,7 +46,14 @@ public class Zombie_Movement : MonoBehaviour {
     //pogon za graczem
     public void movment()
     {
-        this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, zoombie_speed);
+        if(UIManager.pauseState == false)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, zoombie_speed);
+        }
+        else
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.0f);
+        }
     }
 
     //metoda nie dokonczona pracuje nad tym, alternatywny sposob poruszania sie zoombie

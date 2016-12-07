@@ -61,9 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Models\Vehicles\Assets\Scripts\MovementControl.cs" />
@@ -75,6 +72,7 @@
     <Compile Include="Assets\Scripts\Lvl_1_player_movment.cs" />
     <Compile Include="Assets\Scripts\Medkit_script.cs" />
     <Compile Include="Assets\Scripts\TruckMovement.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\WallHP.cs" />
     <Compile Include="Assets\Scripts\Walls_destrucion.cs" />
     <Compile Include="Assets\Scripts\Zombie_Movement.cs" />
