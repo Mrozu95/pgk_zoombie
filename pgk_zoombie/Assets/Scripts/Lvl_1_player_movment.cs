@@ -19,6 +19,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     bool inAir;
     bool canBeHitted; // czy mozna nas uderzyc
     bool slowed; // zmienna do spowalniaczy/wody
+    public static bool sterowanie = true; // zmienna do zmiany sterowania dla tru sztrzalki dla false wsad
 
 
     public Image damageImage; // do migniecia po uderzeniu
@@ -91,6 +92,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         canBeHitted = true;
         slowed = false;
         movementDirection = new Vector3();
+        
 
 
          /*max_speed = 20; STARY MOVMENT
@@ -177,23 +179,48 @@ public class Lvl_1_player_movment : MonoBehaviour {
             jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && coins_count >= 5) // sprawdzanie przycisku Z
+        if (sterowanie == true)
         {
-            teleport();
-            coins_count = coins_count - 5;
+            if (Input.GetKeyDown(KeyCode.Z) && coins_count >= 5) // sprawdzanie przycisku Z
+            {
+                teleport();
+                coins_count = coins_count - 5;
+            }
+
+            if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
+            {
+                Push_back(50, 1000);
+                coins_count -= 3;
+            }
+
+            if (Input.GetKeyDown(KeyCode.C) && coins_count >= 3) // sprawdzanie przycisku C
+            {
+                coins_count -= 3;
+                StartCoroutine(invulnerable(3.0f));
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Comma) && coins_count >= 5) // sprawdzanie przycisku Z
+            {
+                teleport();
+                coins_count = coins_count - 5;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Period) && coins_count >= 3) // sprawdzanie przycisku X
+            {
+                Push_back(50, 1000);
+                coins_count -= 3;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Slash) && coins_count >= 3) // sprawdzanie przycisku C
+            {
+                coins_count -= 3;
+                StartCoroutine(invulnerable(3.0f));
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
-        {
-            StartCoroutine( Push_back(50, 1000));
-            coins_count -= 3;
-        }
-
-        if (Input.GetKeyDown(KeyCode.C) && coins_count >= 3) // sprawdzanie przycisku C
-        {
-            coins_count -= 3;
-            StartCoroutine(invulnerable(3.0f));
-        }
+        
        
     }
 
@@ -287,6 +314,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
             other.gameObject.SetActive(false);
             coins_count++;
         }
+        if (other.gameObject.CompareTag("Destructible_wall"))
+        {
+            other.gameObject.SetActive(false);
+            //coins_count++;
+        }
         if (other.gameObject.CompareTag("Spawn"))
         {
             for(int i=0; i<100; i++)
@@ -328,6 +360,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             if (collision.gameObject.CompareTag("Truck"))
             {
                 Health.subtractHealth(100);
+                
             }
         }
     }
@@ -344,11 +377,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
     //odepchniecie. Działa całkiem fajnie, ewentualnie dostosować promień i moc
-    public IEnumerator Push_back(float radius, float power)
+    public void Push_back(float radius, float power)
     {
-        canBeHitted = false;
-        yield return new WaitForSeconds(1.5f);
-        canBeHitted = true;
         Vector3 explosionPos = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
         foreach (Collider hit in colliders)
