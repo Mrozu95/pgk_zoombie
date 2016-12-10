@@ -105,9 +105,9 @@ public class UIManager : MonoBehaviour {
         }
         else
         {
-            tekstSkill1.text = "," + System.Environment.NewLine + "-5 coins";
-            tekstSkill2.text = "." + System.Environment.NewLine + "-3 coins"; 
-            tekstSkill3.text = "/" + System.Environment.NewLine + "-3 coins"; 
+            tekstSkill1.text = "<" + System.Environment.NewLine + "-5 coins";
+            tekstSkill2.text = ">" + System.Environment.NewLine + "-3 coins"; 
+            tekstSkill3.text = "?" + System.Environment.NewLine + "-3 coins"; 
         }
     }
 }

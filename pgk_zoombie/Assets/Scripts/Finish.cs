@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Finish : MonoBehaviour {
 
-
     Animator anim;
     public Rigidbody player;
-    
+    public float restartDelay = 5f;
+    float restartTimer;
 
     void Awake()
     {
@@ -16,7 +16,16 @@ public class Finish : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(player.position.z > 430.5)
-        anim.SetTrigger("Finish");
+        if (player.position.z > 430.5)
+        {
+            anim.SetTrigger("Finish");
+            restartTimer += Time.deltaTime;
+
+            if (restartTimer >= restartDelay)
+            {
+                Application.LoadLevel("MainMenu");
+            }
+
+        }
     }
 }
