@@ -21,6 +21,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     bool slowed; // zmienna do spowalniaczy/wody
     public static bool sterowanie = true; // zmienna do zmiany sterowania dla tru sztrzalki dla false wsad
 
+    Animator anim;
+
 
     public Image damageImage; // do migniecia po uderzeniu
     public float flashSpeed = 5.0f;
@@ -82,6 +84,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         speed = 10;
        
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
         coins_count = 0; // początkowa ilośc monetek
         SetCountText();
         MapCoveredText();
@@ -169,6 +172,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             slowed = false;
         }
 
+        Animating(moveHorizontal, moveVertical);
        
     }
 
@@ -399,5 +403,14 @@ public class Lvl_1_player_movment : MonoBehaviour {
         canBeHitted = false;
         yield return new WaitForSeconds(x_seconds);
         canBeHitted = true;
+    }
+
+    void Animating(float h, float v)
+    {
+        // Create a boolean that is true if either of the input axes is non-zero.
+        bool running = h != 0f || v != 0f;
+
+        // Tell the animator whether or not the player is walking.
+        anim.SetBool("IsRunning", running);
     }
 }
