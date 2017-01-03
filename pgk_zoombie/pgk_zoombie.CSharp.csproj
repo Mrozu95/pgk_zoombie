@@ -61,11 +61,15 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Models\Vehicles\Assets\Scripts\MovementControl.cs" />
     <Compile Include="Assets\Scripts\Camera_movment.cs" />
     <Compile Include="Assets\Scripts\Coin_script.cs" />
+    <Compile Include="Assets\Scripts\FallingTree.cs" />
     <Compile Include="Assets\Scripts\Finish.cs" />
     <Compile Include="Assets\Scripts\GameOver.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />

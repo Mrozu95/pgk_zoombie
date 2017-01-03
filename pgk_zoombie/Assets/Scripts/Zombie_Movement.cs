@@ -8,6 +8,7 @@ public class Zombie_Movement : MonoBehaviour {
     private float zoombie_speed; //pseudo szybkosc, jest to maksymalna różnica odległości od gracza, ale im da sie wieksza to poruszaja sie szybciej
     private Vector3 direction;
     private bool stop;
+    NavMeshAgent agent;
 
 
     // Use this for initialization
@@ -18,6 +19,7 @@ public class Zombie_Movement : MonoBehaviour {
         zoombie_speed = 0.14f;
         stop = false;
         UIManager.pauseState = false;
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -59,8 +61,7 @@ public class Zombie_Movement : MonoBehaviour {
     //metoda nie dokonczona pracuje nad tym, alternatywny sposob poruszania sie zoombie
     public void movment2()
     {
-        direction = player.transform.position;
-        rb.AddForce(direction * 10);
+        agent.destination = player.position;
     }
 
     //teoretycznie woda tez powinna spowalniac zoombie ale przy uzyciu metody movment() nie zabardzo sie to chyba sprawdza dlatego pracuje nad movment2()
@@ -85,6 +86,11 @@ public class Zombie_Movement : MonoBehaviour {
             this.gameObject.SetActive(false);
         }
         if(collision.gameObject.CompareTag("KillingPlane"))
+        {
+            this.gameObject.SetActive(false);
+        }
+
+        if (collision.gameObject.CompareTag("KillingTree"))
         {
             this.gameObject.SetActive(false);
         }

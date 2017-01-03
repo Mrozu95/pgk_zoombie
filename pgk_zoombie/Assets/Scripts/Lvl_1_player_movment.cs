@@ -14,7 +14,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Rigidbody rb;
     private Vector3 movementDirection;
 
-    public int speed;
+    public float speed = 150f;
     public float Jump; // wysokosc skoku
     bool inAir;
     bool canBeHitted; // czy mozna nas uderzyc
@@ -81,7 +81,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        speed = 10;
+        
        
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
@@ -161,7 +161,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if(slowed==false)
         {
             movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 20 * Time.deltaTime; //20 - szybkosc
+            movementDirection = movementDirection * 15 * Time.deltaTime; //20 - szybkosc
             rb.MovePosition(transform.position + movementDirection);
         }
         else
@@ -365,6 +365,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
             {
                 Health.subtractHealth(100);
                 
+            }
+
+            if (collision.gameObject.CompareTag("KillingTree"))
+            {
+                Health.subtractHealth(200);
             }
         }
     }
