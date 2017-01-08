@@ -90,7 +90,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         MapCoveredText();
         SetSlider();
         
-        Jump = 400.0f; // wysokosc skoku
+        Jump = 800.0f; // wysokosc skoku
         inAir = false; // czy kulka jest w podskoku, zmienna zeby nie mozna bylo podskakiwac bedac w skoku
         canBeHitted = true;
         slowed = false;
@@ -161,13 +161,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if(slowed==false)
         {
             movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 15 * Time.deltaTime; //20 - szybkosc
+            movementDirection = movementDirection * 8 * Time.deltaTime; //20 - szybkosc
             rb.MovePosition(transform.position + movementDirection);
         }
         else
         {
             movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 5 * Time.deltaTime; //20 - szybkosc
+            movementDirection = movementDirection * 3 * Time.deltaTime; //20 - szybkosc
             rb.MovePosition(transform.position + movementDirection);
             slowed = false;
         }

@@ -8,7 +8,7 @@ public class Zombie_Movement : MonoBehaviour {
     private float zoombie_speed; //pseudo szybkosc, jest to maksymalna różnica odległości od gracza, ale im da sie wieksza to poruszaja sie szybciej
     private Vector3 direction;
     private bool stop;
-    NavMeshAgent agent;
+    UnityEngine.AI.NavMeshAgent agent;
 
 
     // Use this for initialization
@@ -19,7 +19,7 @@ public class Zombie_Movement : MonoBehaviour {
         zoombie_speed = 0.14f;
         stop = false;
         UIManager.pauseState = false;
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     // Update is called once per frame
