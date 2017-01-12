@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 public class Zombie_Movement : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class Zombie_Movement : MonoBehaviour {
     private float zoombie_speed; //pseudo szybkosc, jest to maksymalna różnica odległości od gracza, ale im da sie wieksza to poruszaja sie szybciej
     private Vector3 direction;
     private bool stop;
-    UnityEngine.AI.NavMeshAgent agent;
+    NavMeshAgent agent;
 
 
     // Use this for initialization
@@ -19,21 +20,25 @@ public class Zombie_Movement : MonoBehaviour {
         zoombie_speed = 0.14f;
         stop = false;
         UIManager.pauseState = false;
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        //  transform.position = new Vector3(this.transform.position.x, transform.position.y, transform.position.z + 1);
+        
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {      
         if (stop == false)
         {
-            movment();
+            movment2();
         }
         else if (stop == true && UIManager.pauseState == false)
         {
             this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.07f);
             haltnichtsitzen();
         }
+
+        zombieRotation();
     }
 
     //pausa po hicie
@@ -61,7 +66,15 @@ public class Zombie_Movement : MonoBehaviour {
     //metoda nie dokonczona pracuje nad tym, alternatywny sposob poruszania sie zoombie
     public void movment2()
     {
-        agent.destination = player.position;
+        agent.SetDestination(player.position);       
+    }
+
+    private void zombieRotation()
+    {
+        Vector3 relativePos = player.position - transform.position;
+        relativePos = new Vector3(relativePos.x, 0, relativePos.z);
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+        transform.rotation = rotation;
     }
 
     //teoretycznie woda tez powinna spowalniac zoombie ale przy uzyciu metody movment() nie zabardzo sie to chyba sprawdza dlatego pracuje nad movment2()

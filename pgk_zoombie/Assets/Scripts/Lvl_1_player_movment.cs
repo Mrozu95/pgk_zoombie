@@ -161,7 +161,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if(slowed==false)
         {
             movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 8 * Time.deltaTime; //20 - szybkosc
+            movementDirection = movementDirection * 20 * Time.deltaTime; //20 - szybkosc
             rb.MovePosition(transform.position + movementDirection);
         }
         else
@@ -173,7 +173,46 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
 
         Animating(moveHorizontal, moveVertical);
-       
+
+        playerRotation(moveHorizontal, moveVertical); // obrot gracza
+     
+    }
+
+    private void playerRotation(float moveHorizontal, float moveVertical)
+    {
+        if (moveVertical > 0 && moveHorizontal > 0) // przod prawo
+        {
+            transform.rotation = Quaternion.Euler(0, 45, 0);
+        }
+        else if (moveVertical > 0 && moveHorizontal < 0) //przod lewo
+        {
+            transform.rotation = Quaternion.Euler(0, -45, 0);
+        }
+        else if (moveVertical < 0 && moveHorizontal > 0) //tyl prawo
+        {
+            transform.rotation = Quaternion.Euler(0, 135, 0);
+        }
+        else if (moveVertical < 0 && moveHorizontal < 0) //tyl lewo
+        {
+            transform.rotation = Quaternion.Euler(0, -135, 0);
+        }
+        else if (moveVertical > 0) //przod
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if(moveVertical < 0) // tyl
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (moveHorizontal < 0) // lewo
+        {
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+        else if (moveHorizontal > 0) //prawo
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+
     }
 
     public void CheckButtons()
@@ -262,21 +301,21 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
 
-    public void spawn()
+    public void spawn(float distance)
     {
-        Instantiate(summon, new Vector3(spawnPoint.position.x + 15, spawnPoint.position.y, spawnPoint.position.z), spawnPoint.rotation);
+        Instantiate(summon, new Vector3(spawnPoint.position.x + distance, spawnPoint.position.y, spawnPoint.position.z + distance/2), spawnPoint.rotation);
     }
 
-    public void spawn2()
+    public void spawn2(float distance)
     {
-        Instantiate(summon, new Vector3(spawnPoint1.position.x, spawnPoint1.position.y, spawnPoint1.position.z), spawnPoint1.rotation);
-        Instantiate(summon, new Vector3(spawnPoint2.position.x, spawnPoint2.position.y, spawnPoint2.position.z), spawnPoint2.rotation);
+        Instantiate(summon, new Vector3(spawnPoint1.position.x + distance, spawnPoint1.position.y, spawnPoint1.position.z + distance / 2), spawnPoint1.rotation);
+        Instantiate(summon, new Vector3(spawnPoint2.position.x + distance, spawnPoint2.position.y, spawnPoint2.position.z + distance / 2), spawnPoint2.rotation);
         
     }
-    public void spawn3()
+    public void spawn3(float distance)
     {
-        Instantiate(summon, new Vector3(spawnPoint3.position.x, spawnPoint3.position.y, spawnPoint3.position.z), spawnPoint3.rotation);
-        Instantiate(summon, new Vector3(spawnPoint4.position.x, spawnPoint4.position.y, spawnPoint4.position.z), spawnPoint4.rotation);
+        Instantiate(summon, new Vector3(spawnPoint3.position.x + distance, spawnPoint3.position.y, spawnPoint3.position.z + distance / 2), spawnPoint3.rotation);
+        Instantiate(summon, new Vector3(spawnPoint4.position.x + distance, spawnPoint4.position.y, spawnPoint4.position.z + distance / 2), spawnPoint4.rotation);
 
     }
 
@@ -325,25 +364,25 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Spawn"))
         {
-            for(int i=0; i<100; i++)
+            for(int i=0; i<5; i++)
             {
-                spawn();
+                spawn( i * 2);
             }
-            spawnTruck2();
+            //spawnTruck2();
         }
         if (other.gameObject.CompareTag("Spawn1"))
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 3; i++)
             {
-                spawn2();
+                spawn2(i * 3);
                 other.enabled = false;
             }
         }
         if (other.gameObject.CompareTag("Spawn2"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
-                spawn3();
+                spawn3( i * 3);
             }
             spawnTruck2();
         }
