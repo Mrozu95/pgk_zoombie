@@ -27,16 +27,17 @@ public class Zombie_Movement : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-    {      
-        if (stop == false)
-        {
-            movment2();
-        }
-        else if (stop == true && UIManager.pauseState == false)
-        {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.07f);
-            haltnichtsitzen();
-        }
+    {
+        //if (stop == false)
+        //{
+        //    movment2();
+        //}
+        //else if (stop == true && UIManager.pauseState == false)
+        //{
+        //    this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.07f);
+        //    haltnichtsitzen();
+        //}
+        movment2();
 
         zombieRotation();
     }
@@ -96,17 +97,23 @@ public class Zombie_Movement : MonoBehaviour {
         }
         if (collision.gameObject.CompareTag("Truck"))
         {
-            this.gameObject.SetActive(false);
+            killZombie();
         }
         if(collision.gameObject.CompareTag("KillingPlane"))
         {
-            this.gameObject.SetActive(false);
+            killZombie();
         }
 
         if (collision.gameObject.CompareTag("KillingTree"))
         {
-            this.gameObject.SetActive(false);
+            killZombie();
         }
         return stop;
+    }
+
+    private void killZombie()
+    {
+        Destroy(this);
+        //Lvl_1_player_movment.enableKilledZombiesText();
     }
 }

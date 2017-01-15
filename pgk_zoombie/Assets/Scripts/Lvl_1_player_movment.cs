@@ -42,11 +42,14 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public static int coins_count;
 
     public GameObject summon;
+    public Transform summonTransform;
     public Transform spawnPoint;
     public Transform spawnPoint1;
     public Transform spawnPoint2;
     public Transform spawnPoint3;
     public Transform spawnPoint4;
+    public Transform spawnPoint5;
+    public Transform spawnPoint6;
 
     public GameObject truck2;
     public Transform truckSpawn;
@@ -56,6 +59,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         countText.text = "Monety : " + coins_count.ToString();
     }
+
 
     public void MapCoveredText()
     {
@@ -232,7 +236,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
             {
-                Push_back(50, 1000);
+                Push_back(50, 10000);
                 coins_count -= 3;
             }
 
@@ -301,22 +305,9 @@ public class Lvl_1_player_movment : MonoBehaviour {
     }
 
 
-    public void spawn(float distance)
+    public void spawn(Transform spawnPoint, float distance)
     {
-        Instantiate(summon, new Vector3(spawnPoint.position.x + distance, spawnPoint.position.y, spawnPoint.position.z + distance/2), spawnPoint.rotation);
-    }
-
-    public void spawn2(float distance)
-    {
-        Instantiate(summon, new Vector3(spawnPoint1.position.x + distance, spawnPoint1.position.y, spawnPoint1.position.z + distance / 2), spawnPoint1.rotation);
-        Instantiate(summon, new Vector3(spawnPoint2.position.x + distance, spawnPoint2.position.y, spawnPoint2.position.z + distance / 2), spawnPoint2.rotation);
-        
-    }
-    public void spawn3(float distance)
-    {
-        Instantiate(summon, new Vector3(spawnPoint3.position.x + distance, spawnPoint3.position.y, spawnPoint3.position.z + distance / 2), spawnPoint3.rotation);
-        Instantiate(summon, new Vector3(spawnPoint4.position.x + distance, spawnPoint4.position.y, spawnPoint4.position.z + distance / 2), spawnPoint4.rotation);
-
+        Instantiate(summon, new Vector3(spawnPoint.position.x + distance, spawnPoint.position.y, spawnPoint.position.z + distance/2), spawnPoint.rotation, summonTransform);
     }
 
     public void spawnTruck2()
@@ -366,25 +357,32 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             for(int i=0; i<5; i++)
             {
-                spawn( i * 2);
+                spawn(spawnPoint ,i * 2);
+                spawn(spawnPoint6, i * 2);
+               
             }
-            //spawnTruck2();
+            //other.enabled = false;
         }
         if (other.gameObject.CompareTag("Spawn1"))
         {
             for (int i = 0; i < 3; i++)
             {
-                spawn2(i * 3);
-                other.enabled = false;
+                spawn(spawnPoint1, i * 3);
+                spawn(spawnPoint2, i * 3);
+                //other.enabled = false;
             }
         }
         if (other.gameObject.CompareTag("Spawn2"))
         {
             for (int i = 0; i < 3; i++)
             {
-                spawn3( i * 3);
+                spawn(spawnPoint3, i * 3);
+                spawn(spawnPoint4, i * 3);
+                spawn(spawnPoint5, i * 3);
             }
+            
             spawnTruck2();
+            //other.enabled = false;
         }
 
 
@@ -408,7 +406,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
             if (collision.gameObject.CompareTag("KillingTree"))
             {
-                Health.subtractHealth(200);
+                Health.subtractHealth(Health.currentHealth + 100);
+            }
+
+            if (collision.gameObject.CompareTag("KillingPlane"))
+            {
+                Health.subtractHealth(Health.currentHealth + 100);
             }
         }
     }
