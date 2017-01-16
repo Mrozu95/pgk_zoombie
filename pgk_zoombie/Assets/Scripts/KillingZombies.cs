@@ -38,7 +38,7 @@ public class KillingZombies : MonoBehaviour {
                 killedZombiestext.enabled = false;
             }
             killedZombiestext.enabled = true;
-            killedZombiestext.text = "NOWE ZOMBIE /n Pozostało " + transform.childCount + " ZOMBIE!";
+            killedZombiestext.text = "NOWE ZOMBIE" + System.Environment.NewLine + "Pozostało " + transform.childCount + " ZOMBIE!";
             zombiesAmount = transform.childCount;
             StartCoroutine(wait(2));
         }
