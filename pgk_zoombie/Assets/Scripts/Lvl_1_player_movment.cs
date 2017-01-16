@@ -50,6 +50,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Transform spawnPoint4;
     public Transform spawnPoint5;
     public Transform spawnPoint6;
+    public Transform spawnPoint7;
+    public Transform spawnPoint8;
+    public Transform spawnPoint9;
+    public Transform spawnPoint10;
 
     public GameObject truck2;
     public Transform truckSpawn;
@@ -302,6 +306,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             Health.subtractHealth(100);
         }
+        if (rb.position.x > 37.0 || rb.position.x < -37.0)
+        {
+            Health.subtractHealth(100);
+        }
     }
 
 
@@ -379,9 +387,18 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 spawn(spawnPoint3, i * 3);
                 spawn(spawnPoint4, i * 3);
                 spawn(spawnPoint5, i * 3);
+                spawn(spawnPoint10, i * 3);
             }
             
-            spawnTruck2();
+            //other.enabled = false;
+        }
+        if (other.gameObject.CompareTag("Spawn4"))
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                spawn(spawnPoint9, i * 2);
+            }
+
             //other.enabled = false;
         }
 
