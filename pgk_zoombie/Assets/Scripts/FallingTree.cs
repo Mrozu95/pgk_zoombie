@@ -4,7 +4,7 @@ using System.Collections;
 public class FallingTree : MonoBehaviour {
 
     public Transform player;
-    public float fallingSpeed = 100f;
+    public float fallingSpeed = 600f;
     public int  triggerDistance = 13;
 
 	// Use this for initialization

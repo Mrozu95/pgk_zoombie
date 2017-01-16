@@ -57,7 +57,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     // Dodanie monety
     public void SetCountText()
     {
-        countText.text = "Monety : " + coins_count.ToString();
+        countText.text = coins_count.ToString();
     }
 
 
@@ -165,7 +165,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if(slowed==false)
         {
             movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 20 * Time.deltaTime; //20 - szybkosc
+            movementDirection = movementDirection * 10 * Time.deltaTime; //20 - szybkosc
             rb.MovePosition(transform.position + movementDirection);
         }
         else
