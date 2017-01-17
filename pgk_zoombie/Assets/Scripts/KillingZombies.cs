@@ -13,7 +13,7 @@ public class KillingZombies : MonoBehaviour {
     {
         killedZombiestext.enabled = true;
         zombiesAmount = transform.childCount;
-        killedZombiestext.text = "Pozostało " + transform.childCount + " ZOMBIE!";
+        killedZombiestext.text = transform.childCount + " ZOMBIES LEFT";
         StartCoroutine(wait(2));
     }
 
@@ -27,7 +27,7 @@ public class KillingZombies : MonoBehaviour {
                 killedZombiestext.enabled = false;
             }
             killedZombiestext.enabled = true;
-            killedZombiestext.text = "Pozostało " + transform.childCount + " ZOMBIE!";
+            killedZombiestext.text = transform.childCount + " ZOMBIES LEFT";
             zombiesAmount = transform.childCount;
             StartCoroutine(wait(2));
         }
@@ -38,7 +38,7 @@ public class KillingZombies : MonoBehaviour {
                 killedZombiestext.enabled = false;
             }
             killedZombiestext.enabled = true;
-            killedZombiestext.text = "NOWE ZOMBIE" + System.Environment.NewLine + "Pozostało " + transform.childCount + " ZOMBIE!";
+            killedZombiestext.text = "NEW ZOMBIES" + System.Environment.NewLine + transform.childCount + " ZOMBIES LEFT";
             zombiesAmount = transform.childCount;
             StartCoroutine(wait(2));
         }
