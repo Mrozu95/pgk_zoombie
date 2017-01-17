@@ -38,6 +38,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Text countText;
     public Text speedText;
     public Slider slider;
+    public Slider sliderMap;
 
     public static int coins_count;
 
@@ -76,7 +77,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             distanceCovered = 100;
         }
-        speedText.text = "Map Covered: " + distanceCovered + "%";
+        //speedText.text = "Map Covered: " + distanceCovered + "%";
+        sliderMap.value = (float)distanceCovered;
         
         
     }
@@ -93,7 +95,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
        
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        coins_count = 30; // początkowa ilośc monetek
+        coins_count = 0; // początkowa ilośc monetek
         SetCountText();
         MapCoveredText();
         SetSlider();
