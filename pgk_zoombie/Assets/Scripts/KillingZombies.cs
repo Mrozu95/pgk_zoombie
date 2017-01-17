@@ -13,8 +13,8 @@ public class KillingZombies : MonoBehaviour {
     {
         killedZombiestext.enabled = true;
         zombiesAmount = transform.childCount;
-        killedZombiestext.text = transform.childCount - 1 + " ZOMBIES LEFT";
-        StartCoroutine(wait(2));
+        //killedZombiestext.text = transform.childCount - 1 + " ZOMBIES LEFT";
+        //StartCoroutine(wait(2));
     }
 
     // Update is called once per frame

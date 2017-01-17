@@ -11,6 +11,7 @@ public class Zombie_Movement : MonoBehaviour {
     private Vector3 direction;
     private bool stop;
     NavMeshAgent agent;
+    private bool canAttack = true;
 
 
     // Use this for initialization
@@ -95,13 +96,35 @@ public class Zombie_Movement : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            stop = true;
+            if (canAttack)
+            {
+                if(Lvl_1_player_movment.canBeHitted)
+                {
+                    Health.subtractHealth(10);
+                    canAttack = false;
+                    StartCoroutine(attackPause(1.5f));
+                }
+
+            }
+
         }
+        return stop;
+    }
+
+    public IEnumerator attackPause(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canAttack = true;
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+
         if (collision.gameObject.CompareTag("Truck"))
         {
             killZombie();
         }
-        if(collision.gameObject.CompareTag("KillingPlane"))
+        if (collision.gameObject.CompareTag("KillingPlane"))
         {
             killZombie();
         }
@@ -110,7 +133,6 @@ public class Zombie_Movement : MonoBehaviour {
         {
             killZombie();
         }
-        return stop;
     }
 
     private void killZombie()

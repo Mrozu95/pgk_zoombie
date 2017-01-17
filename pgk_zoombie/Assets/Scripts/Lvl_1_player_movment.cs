@@ -17,7 +17,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public float speed = 150f;
     public float Jump; // wysokosc skoku
     bool inAir;
-    bool canBeHitted; // czy mozna nas uderzyc
+    public static bool canBeHitted; // czy mozna nas uderzyc
     bool slowed; // zmienna do spowalniaczy/wody
     public static bool sterowanie = true; // zmienna do zmiany sterowania dla tru sztrzalki dla false wsad
 
@@ -55,6 +55,9 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Transform spawnPoint8;
     public Transform spawnPoint9;
     public Transform spawnPoint10;
+    public Transform spawnPoint11;
+    public Transform spawnPoint12;
+    public Transform spawnPoint13;
 
     public GameObject truck2;
     public Transform truckSpawn;
@@ -242,7 +245,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
             {
-                Push_back(50, 10000);
+                Push_back(50, 70);
                 coins_count -= 3;
             }
 
@@ -371,6 +374,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 spawn(spawnPoint6, i * 2);
                
             }
+
+            for (int i = 0; i < 10; i++)
+            {
+                spawn(spawnPoint11, i * 2);
+                spawn(spawnPoint12, i * 2);
+
+            }
             //other.enabled = false;
         }
         if (other.gameObject.CompareTag("Spawn1"))
@@ -378,7 +388,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
             for (int i = 0; i < 3; i++)
             {
                 spawn(spawnPoint1, i * 3);
-                spawn(spawnPoint2, i * 3);
+                //other.enabled = false;
+            }
+            for (int i = 0; i < 15; i++)
+            {
+                spawn(spawnPoint2, i * 1);
                 //other.enabled = false;
             }
         }
@@ -387,9 +401,14 @@ public class Lvl_1_player_movment : MonoBehaviour {
             for (int i = 0; i < 3; i++)
             {
                 spawn(spawnPoint3, i * 3);
-                spawn(spawnPoint4, i * 3);
+               // spawn(spawnPoint4, i * 3);
                 spawn(spawnPoint5, i * 3);
                 spawn(spawnPoint10, i * 3);
+            }
+
+            for(int i = 0; i <20; i++)
+            {
+                spawn(spawnPoint4, i + 1);
             }
             
             //other.enabled = false;
@@ -399,6 +418,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
             for (int i = 0; i < 3; i++)
             {
                 spawn(spawnPoint9, i * 2);
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                spawn(spawnPoint13, i * 1);
             }
 
             //other.enabled = false;
@@ -414,13 +438,12 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             if (collision.gameObject.CompareTag("Zombie"))
             {
-                Health.subtractHealth(10);
                 damageImage.color = flashColour;
             }
             if (collision.gameObject.CompareTag("Truck"))
             {
-                Health.subtractHealth(100);
-                
+                Health.subtractHealth(Health.currentHealth + 100);
+           
             }
 
             if (collision.gameObject.CompareTag("KillingTree"))
