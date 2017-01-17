@@ -6,7 +6,7 @@ public class Zombie_Movement : MonoBehaviour {
 
     Rigidbody rb;
     public Transform player;
-    public GameObject ja;
+   // public GameObject ja;
     private float zoombie_speed; //pseudo szybkosc, jest to maksymalna różnica odległości od gracza, ale im da sie wieksza to poruszaja sie szybciej
     private Vector3 direction;
     private bool stop;
@@ -115,7 +115,8 @@ public class Zombie_Movement : MonoBehaviour {
 
     private void killZombie()
     {
-        Destroy(ja);
+        this.gameObject.SetActive(false) ;
+        Destroy(this.gameObject);
         //Lvl_1_player_movment.enableKilledZombiesText();
     }
 }
