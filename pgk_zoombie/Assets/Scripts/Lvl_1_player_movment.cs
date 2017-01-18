@@ -23,7 +23,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     Animator anim;
 
-
     public Image damageImage; // do migniecia po uderzeniu
     public float flashSpeed = 5.0f;
     public Color flashColour = new Color(1.0f, 0.0f, 0.0f, 0.1f);
@@ -68,7 +67,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         countText.text = coins_count.ToString();
     }
 
-
     public void MapCoveredText()
     {
         double distanceCovered = System.Math.Round(rb.position.z / 434 * 100);
@@ -81,9 +79,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             distanceCovered = 100;
         }
         //speedText.text = "Map Covered: " + distanceCovered + "%";
-        sliderMap.value = (float)distanceCovered;
-        
-        
+        sliderMap.value = (float)distanceCovered;    
     }
 
     public void SetSlider()
@@ -93,9 +89,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     // Use this for initialization
     void Start()
-    {
-        
-       
+    {   
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         coins_count = 0; // początkowa ilośc monetek
@@ -108,8 +102,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         canBeHitted = true;
         slowed = false;
         movementDirection = new Vector3();
-        
-
 
          /*max_speed = 20; STARY MOVMENT
         horizontal_speed = 20; // stale do movment, zwieksza plynnosc
@@ -239,13 +231,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Z) && coins_count >= 5) // sprawdzanie przycisku Z
             {
-                teleport();
+                StartCoroutine(teleport());
                 coins_count = coins_count - 5;
             }
 
             if (Input.GetKeyDown(KeyCode.X) && coins_count >= 3) // sprawdzanie przycisku X
             {
-                Push_back(50, 70);
+                Push_back(50, 50);
                 coins_count -= 3;
             }
 
@@ -259,13 +251,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Comma) && coins_count >= 5) // sprawdzanie przycisku Z
             {
-                teleport();
+                StartCoroutine(teleport());
                 coins_count = coins_count - 5;
             }
 
             if (Input.GetKeyDown(KeyCode.Period) && coins_count >= 3) // sprawdzanie przycisku X
             {
-                Push_back(50, 1000);
+                Push_back(50, 50);
                 coins_count -= 3;
             }
 
@@ -275,9 +267,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 StartCoroutine(invulnerable(3.0f));
             }
         }
-
-        
-       
     }
 
 
@@ -287,7 +276,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             SkillShadeMiddle.color = flashColour2;
             SkillShadeRight.color = flashColour2;
-
         }
         else
         {
@@ -297,7 +285,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if (coins_count < 5)
         {
             SkillShadeLeft.color = flashColour2;
-
         }
         else
         {
@@ -316,7 +303,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
             Health.subtractHealth(100);
         }
     }
-
 
     public void spawn(Transform spawnPoint, float distance)
     {
@@ -346,8 +332,9 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
     }
 
-    void teleport()
+    IEnumerator teleport()
     {
+        yield return new WaitForSeconds(1.0f);
         this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);
     }
 
@@ -371,15 +358,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
             for(int i=0; i<5; i++)
             {
                 spawn(spawnPoint ,i * 2);
-                spawn(spawnPoint6, i * 2);
-               
+                spawn(spawnPoint6, i * 2);          
             }
 
             for (int i = 0; i < 10; i++)
             {
                 spawn(spawnPoint11, i * 2);
                 spawn(spawnPoint12, i * 2);
-
             }
             //other.enabled = false;
         }
@@ -463,9 +448,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Water"))
         {
-
             slowed = true;
-
         }
     }
 
