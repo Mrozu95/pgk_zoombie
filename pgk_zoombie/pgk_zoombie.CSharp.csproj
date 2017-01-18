@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\KillingZombies.cs" />
     <Compile Include="Assets\Scripts\Lvl_1_player_movment.cs" />
     <Compile Include="Assets\Scripts\Medkit_script.cs" />
+    <Compile Include="Assets\Scripts\PushBack.cs" />
     <Compile Include="Assets\Scripts\Shield.cs" />
     <Compile Include="Assets\Scripts\Teleporter.cs" />
     <Compile Include="Assets\Scripts\TruckMovement.cs" />
