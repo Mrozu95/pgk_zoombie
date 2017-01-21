@@ -2,11 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-
-
 public class Lvl_1_player_movment : MonoBehaviour {
-    
-    
+
     /*private float max_speed; STARY MOVMENT
     private int horizontal_speed;
     private int vertical_speed;*/
@@ -32,7 +29,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Image SkillShadeLeft;
     public Color flashColour2 = new Color(0.5f, 0.5f, 0.5f, 0.4f);
     public Color flashColour3 = new Color(1.0f, 1.0f, 1.0f, 0.01f);
-
 
     public Text countText;
     public Text speedText;
@@ -60,6 +56,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public GameObject truck2;
     public Transform truckSpawn;
+
+    public float deathFallSpeed;
+    public bool canMove;
+    CapsuleCollider playerCollider;
 
     // Dodanie monety
     public void SetCountText()
@@ -92,6 +92,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {   
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        playerCollider = GetComponent<CapsuleCollider>();
         coins_count = 0; // początkowa ilośc monetek
         SetCountText();
         MapCoveredText();
@@ -102,6 +103,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         canBeHitted = true;
         slowed = false;
         movementDirection = new Vector3();
+        canMove = true;
 
          /*max_speed = 20; STARY MOVMENT
         horizontal_speed = 20; // stale do movment, zwieksza plynnosc
@@ -124,14 +126,22 @@ public class Lvl_1_player_movment : MonoBehaviour {
             DeadWhenFall();
         }
 
-        if(inAir == false)
+        if (Health.currentHealth <= 0)
+        {
+            canMove = false;
+            playerCollider.height = 30f;
+            playerCollider.radius = 1f;
+            anim.SetBool("IsRunning", false);
+            if (this.transform.eulerAngles.x <= 75)
+                transform.Rotate(Vector3.right * deathFallSpeed * Time.deltaTime);
+        }
+
+        if (inAir == false)
         {
             rb.velocity = rb.velocity * 0.0f;
         }
 
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); // po hicie zmiana z ekranu czerwonego na odmyslny
-        
-
     }
 
     //sterowanie graczem
@@ -160,27 +170,42 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     void movement1() //stabilniejsze sterowanie
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        if(slowed==false)
+        if(canMove == true)
         {
-            movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 10 * Time.deltaTime; //20 - szybkosc
-            rb.MovePosition(transform.position + movementDirection);
-        }
-        else
-        {
-            movementDirection.Set(moveHorizontal, 0, moveVertical);
-            movementDirection = movementDirection * 3 * Time.deltaTime; //20 - szybkosc
-            rb.MovePosition(transform.position + movementDirection);
-            slowed = false;
-        }
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        Animating(moveHorizontal, moveVertical);
+            if (slowed == false)
+            {
+                movementDirection.Set(moveHorizontal, 0, moveVertical);
+                movementDirection = movementDirection * 10 * Time.deltaTime; //20 - szybkosc
+                
+                if (this.transform.position.z <= -10)
+                {
+                    movementDirection.Set(0, 0, 0.01f);
+                }
+                if (this.transform.position.x <= -12)
+                {
+                    movementDirection.Set(0.01f, 0, 0);
+                }
+                if (this.transform.position.x >= 13)
+                {
+                    movementDirection.Set(-0.01f, 0, 0);
+                }
+                rb.MovePosition(transform.position + movementDirection);
+            }
+            else
+            {
+                movementDirection.Set(moveHorizontal, 0, moveVertical);
+                movementDirection = movementDirection * 3 * Time.deltaTime; //20 - szybkosc
+                rb.MovePosition(transform.position + movementDirection);
+                slowed = false;
+            }
 
-        playerRotation(moveHorizontal, moveVertical); // obrot gracza
-     
+            Animating(moveHorizontal, moveVertical);
+
+            playerRotation(moveHorizontal, moveVertical); // obrot gracza 
+        }
     }
 
     private void playerRotation(float moveHorizontal, float moveVertical)
@@ -217,7 +242,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);
         }
-
     }
 
     public void CheckButtons()
@@ -268,7 +292,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
             }
         }
     }
-
 
     public void SkillsAnimations() // przyciemnianie i rozjasnainei obrazkow ze skillami
     {
@@ -412,8 +435,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
             //other.enabled = false;
         }
-
-
     }
 
     // kontakt z zombie zmniejsza pasek życia
@@ -427,18 +448,18 @@ public class Lvl_1_player_movment : MonoBehaviour {
             }
             if (collision.gameObject.CompareTag("Truck"))
             {
-                Health.subtractHealth(Health.currentHealth + 100);
+                Health.subtractHealth(200);
            
             }
 
             if (collision.gameObject.CompareTag("KillingTree"))
             {
-                Health.subtractHealth(Health.currentHealth + 100);
+                Health.subtractHealth(200);
             }
 
             if (collision.gameObject.CompareTag("KillingPlane"))
             {
-                Health.subtractHealth(Health.currentHealth + 100);
+                Health.subtractHealth(200);
             }
         }
     }

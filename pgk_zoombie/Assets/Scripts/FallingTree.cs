@@ -6,17 +6,19 @@ public class FallingTree : MonoBehaviour {
     public Transform player;
     public float fallingSpeed = 600f;
     public int  triggerDistance = 13;
+    public bool falling;
 
 	// Use this for initialization
 	void Start () {
-       
+        falling = false;
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.z - player.position.z <= triggerDistance)
+        if(transform.position.z - player.position.z <= triggerDistance || falling == true)
         {
+            falling = true;
             if (this.gameObject.tag == "Tree")
             {
                 gameObject.tag = "KillingTree";

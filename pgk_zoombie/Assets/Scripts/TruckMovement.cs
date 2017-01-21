@@ -10,9 +10,12 @@ public class TruckMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-        transform.position = new Vector3(this.transform.position.x + 0.5f, this.transform.position.y, this.transform.position.z);
-        back();
+
+        if(Health.currentHealth > 0)
+        {
+            transform.position = new Vector3(this.transform.position.x + 0.5f, this.transform.position.y, this.transform.position.z);
+            back();
+        }
     }
 
     void back()
