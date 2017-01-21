@@ -11,7 +11,7 @@ public class FallingTree : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         falling = false;
-	}
+    }
 
     // Update is called once per frame
     void Update()
@@ -29,10 +29,8 @@ public class FallingTree : MonoBehaviour {
                 fall();
             else
                 gameObject.tag = "FallenTree";
-        }
 
-        
-        
+        }   
     }
 
     void fall()

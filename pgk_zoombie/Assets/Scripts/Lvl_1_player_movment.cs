@@ -188,7 +188,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
                 {
                     movementDirection.Set(0.01f, 0, 0);
                 }
-                if (this.transform.position.x >= 13)
+                if (this.transform.position.x >= 12)
                 {
                     movementDirection.Set(-0.01f, 0, 0);
                 }
@@ -198,6 +198,19 @@ public class Lvl_1_player_movment : MonoBehaviour {
             {
                 movementDirection.Set(moveHorizontal, 0, moveVertical);
                 movementDirection = movementDirection * 3 * Time.deltaTime; //20 - szybkosc
+
+                if (this.transform.position.z <= -10)
+                {
+                    movementDirection.Set(0, 0, 0.01f);
+                }
+                if (this.transform.position.x <= -12)
+                {
+                    movementDirection.Set(0.01f, 0, 0);
+                }
+                if (this.transform.position.x >= 12)
+                {
+                    movementDirection.Set(-0.01f, 0, 0);
+                }
                 rb.MovePosition(transform.position + movementDirection);
                 slowed = false;
             }
