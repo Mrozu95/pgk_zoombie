@@ -61,6 +61,17 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public bool canMove;
     CapsuleCollider playerCollider;
 
+    public Text diamonds;
+    public Text zombies;
+    public Text time;
+    public Text distance;
+
+    string timeSinceLevelStarted;
+
+    public double distanceCovered;
+    bool countTime;
+    bool finished;
+
     // Dodanie monety
     public void SetCountText()
     {
@@ -69,7 +80,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void MapCoveredText()
     {
-        double distanceCovered = System.Math.Round(rb.position.z / 434 * 100);
+        distanceCovered = System.Math.Round(rb.position.z / 434 * 100);
         if (distanceCovered < 0)
         {
             distanceCovered = 0;
@@ -85,6 +96,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public void SetSlider()
     {
         slider.value = Health.currentHealth;
+    }
+
+    public void SetStatisticsText()
+    {
+        diamonds.text = "Diamonds collected: " + coins_count.ToString();
+        distance.text = "Distance covered: " + distanceCovered.ToString() + "%";
+        time.text = "Time passed: " + timeSinceLevelStarted + " s";
     }
 
     // Use this for initialization
@@ -105,9 +123,13 @@ public class Lvl_1_player_movment : MonoBehaviour {
         movementDirection = new Vector3();
         canMove = true;
 
-         /*max_speed = 20; STARY MOVMENT
-        horizontal_speed = 20; // stale do movment, zwieksza plynnosc
-        vertical_speed = 5; // stale do movment, zwieksza plynnosc*/
+        SetStatisticsText();
+        countTime = true;
+        finished = false;
+
+        /*max_speed = 20; STARY MOVMENT
+       horizontal_speed = 20; // stale do movment, zwieksza plynnosc
+       vertical_speed = 5; // stale do movment, zwieksza plynnosc*/
     }
 
     // Update is called once per frame
@@ -124,21 +146,31 @@ public class Lvl_1_player_movment : MonoBehaviour {
             SetSlider();
             SkillsAnimations();
             DeadWhenFall();
+            SetStatisticsText();
         }
 
         if (Health.currentHealth <= 0)
         {
+            countTime = false;
             canMove = false;
-            playerCollider.height = 30f;
-            playerCollider.radius = 1f;
             anim.SetBool("IsRunning", false);
             if (this.transform.eulerAngles.x <= 75)
                 transform.Rotate(Vector3.right * deathFallSpeed * Time.deltaTime);
         }
 
+        if(countTime == true && finished == false)
+        {
+            timeSinceLevelStarted = timeSinceLevelStarted = Time.timeSinceLevelLoad.ToString();
+        }
+
         if (inAir == false)
         {
             rb.velocity = rb.velocity * 0.0f;
+        }
+
+        if(rb.position.z > 470.5)
+        {
+            finished = true;
         }
 
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); // po hicie zmiana z ekranu czerwonego na odmyslny
@@ -332,11 +364,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         if(rb.position.y < 37.0)
         {
-            Health.subtractHealth(100);
+            Health.subtractHealth(200);
         }
         if (rb.position.x > 37.0 || rb.position.x < -37.0)
         {
-            Health.subtractHealth(100);
+            Health.subtractHealth(200);
         }
     }
 
@@ -462,7 +494,6 @@ public class Lvl_1_player_movment : MonoBehaviour {
             if (collision.gameObject.CompareTag("Truck"))
             {
                 Health.subtractHealth(200);
-           
             }
 
             if (collision.gameObject.CompareTag("KillingTree"))
@@ -473,6 +504,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             if (collision.gameObject.CompareTag("KillingPlane"))
             {
                 Health.subtractHealth(200);
+                Destroy(playerCollider);
             }
         }
     }

@@ -1,29 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
-    public float restartDelay = 5f;
+    float restartDelay = 30f;
 
     Animator anim;
     float restartTimer;
-
+    
 	void Awake()
     {
         anim = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
-	    if(Health.currentHealth <= 0)
+        if (Health.currentHealth <= 0)
         {
             anim.SetTrigger("GameOver");
             restartTimer += Time.deltaTime;
 
-            if(restartTimer >= restartDelay)
+            if (Input.GetKeyDown("return"))
+                restartTimer = 30f;
+
+            if (restartTimer >= restartDelay)
             {
-                Application.LoadLevel(Application.loadedLevel);
+                Application.LoadLevel("MainMenu");
             }
         }
 	}

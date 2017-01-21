@@ -5,7 +5,7 @@ public class Finish : MonoBehaviour {
 
     Animator anim;
     public Rigidbody player;
-    public float restartDelay = 5f;
+    float restartDelay = 30f;
     float restartTimer;
 
     void Awake()
@@ -20,6 +20,9 @@ public class Finish : MonoBehaviour {
         {
             anim.SetTrigger("Finish");
             restartTimer += Time.deltaTime;
+
+            if (Input.GetKeyDown("return"))
+                restartTimer = 30f;
 
             if (restartTimer >= restartDelay)
             {

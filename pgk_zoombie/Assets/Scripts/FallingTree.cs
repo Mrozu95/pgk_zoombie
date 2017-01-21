@@ -8,8 +8,8 @@ public class FallingTree : MonoBehaviour {
     public int  triggerDistance = 13;
     public bool falling;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         falling = false;
     }
 
@@ -25,12 +25,11 @@ public class FallingTree : MonoBehaviour {
             }      
 
 
-            if (this.transform.eulerAngles.x <= 70)
+            if (this.transform.eulerAngles.x <= 70 && Health.currentHealth > 0)
                 fall();
             else
                 gameObject.tag = "FallenTree";
-
-        }   
+        }
     }
 
     void fall()
