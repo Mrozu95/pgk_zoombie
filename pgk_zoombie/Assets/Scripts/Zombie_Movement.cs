@@ -12,12 +12,14 @@ public class Zombie_Movement : MonoBehaviour {
     private bool stop;
     NavMeshAgent agent;
     private bool canAttack = true;
+    public AudioClip zombieHitSound;
+    private AudioSource zombieHitSoundSource;
 
 
     // Use this for initialization
     void Start()
     {
-        //rb = new Rigidbody();
+        zombieHitSoundSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>(); // tak dziala nasz movment z new rigidbody nie dzialalo
         zoombie_speed = 0.14f;
         stop = false;
@@ -101,6 +103,11 @@ public class Zombie_Movement : MonoBehaviour {
                 if(Lvl_1_player_movment.canBeHitted)
                 {
                     Health.subtractHealth(10);
+                    if (Health.currentHealth > 0)
+                    {
+                        zombieHitSoundSource.PlayOneShot(zombieHitSound, 1F);
+                    }
+                    
                     canAttack = false;
                     StartCoroutine(attackPause(1.5f));
                 }

@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\WallHP.cs" />
     <Compile Include="Assets\Scripts\Walls_destrucion.cs" />
     <Compile Include="Assets\Scripts\Zombie_Movement.cs" />
+    <Compile Include="Assets\Scripts\menuMusic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Models\CartoonBusinessZombie\ReadMe.txt" />

@@ -17,6 +17,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public static bool canBeHitted; // czy mozna nas uderzyc
     bool slowed; // zmienna do spowalniaczy/wody
     public static bool sterowanie = true; // zmienna do zmiany sterowania dla tru sztrzalki dla false wsad
+    public static bool flagaGameOverSound = true;
+    public static bool flagaVictorySound = true;
 
     Animator anim;
 
@@ -54,6 +56,31 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Transform spawnPoint11;
     public Transform spawnPoint12;
     public Transform spawnPoint13;
+
+
+
+    public AudioClip coinSound;
+    public AudioClip gameOverSound;
+    public AudioClip gameplaySound;
+    public AudioClip zombieSpawnSound;
+    public AudioClip victorySound;
+    public AudioClip barrierSound;
+    public AudioClip teleportSound;
+    public AudioClip pushBackSound;
+    public AudioClip jumpSound;
+
+
+    private AudioSource coinSoundSource;
+    private AudioSource jumpSoundSource;
+    private AudioSource gameOverSoundSource;
+    private AudioSource gameplaySoundSource;
+    private AudioSource zombieSpawnSoundSource;
+    private AudioSource victorySoundSource;
+    private AudioSource barrierSoundSource;
+    private AudioSource teleportSoundSource;
+    private AudioSource pushBackSoundSource;
+
+
 
     public GameObject truck2;
     public Transform truckSpawn;
@@ -115,6 +142,23 @@ public class Lvl_1_player_movment : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider>();
+
+
+
+        coinSoundSource = GetComponent<AudioSource>();
+        gameOverSoundSource = GetComponent<AudioSource>();
+        gameplaySoundSource = GetComponent<AudioSource>();
+        zombieSpawnSoundSource = GetComponent<AudioSource>();
+        victorySoundSource = GetComponent<AudioSource>();
+        barrierSoundSource = GetComponent<AudioSource>();
+        teleportSoundSource = GetComponent<AudioSource>();
+        pushBackSoundSource = GetComponent<AudioSource>();
+        jumpSoundSource = GetComponent<AudioSource>();
+
+
+        gameplaySoundSource.PlayOneShot(gameplaySound, 0.5F);
+
+
         coins_count = 0; // początkowa ilośc monetek
         coins_count_all = 0;
         SetCountText();
@@ -133,9 +177,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         canPause = true;
         finished = false;
 
-        /*max_speed = 20; STARY MOVMENT
-       horizontal_speed = 20; // stale do movment, zwieksza plynnosc
-       vertical_speed = 5; // stale do movment, zwieksza plynnosc*/
+      
     }
 
     // Update is called once per frame
@@ -157,6 +199,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if (Health.currentHealth <= 0)
         {
+            if (flagaGameOverSound == true)
+            {
+                playGameOver();
+            }
+
             countTime = false;
             canMove = false;
             canPause = false;
@@ -178,37 +225,36 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if(rb.position.z > 470.5)
         {
+            if (flagaVictorySound == true)
+            {
+                playVicotry();
+            }
             finished = true;
             canPause = false;
             canMove = false;
         }
 
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); // po hicie zmiana z ekranu czerwonego na odmyslny
+
+
     }
 
-    //sterowanie graczem
-    /*void movement2()
+    void playGameOver()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * horizontal_speed;
-        float moveVertical = Input.GetAxis("Vertical") * vertical_speed;
+        gameplaySoundSource.Stop();
+        gameOverSoundSource.PlayOneShot(gameOverSound, 0.3F);
+        flagaGameOverSound = false;
 
-        movementDirection.Set(moveHorizontal, 0, moveVertical);
+    }
 
-        //maksymalna szybkosc
-        if (rb.velocity.magnitude > max_speed)
-        {
-            rb.velocity = rb.velocity.normalized * max_speed;
-        }
+    void playVicotry()
+    {
+        gameplaySoundSource.Stop();
+        victorySoundSource.PlayOneShot(victorySound, 1F);
+        flagaVictorySound = false;
+    }
 
-        if (rb.velocity.magnitude > max_speed / 2.0f)
-        {
-            rb.AddForce(movementDirection * 2.5f);
-        }
-        else
-        {
-            rb.AddForce(movementDirection * speed);
-        }
-    }*/
+
 
     void movement1() //stabilniejsze sterowanie
     {
@@ -372,7 +418,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void DeadWhenFall()
     {
-        if(rb.position.y < 27.0)
+        if(rb.position.y < -7.0)
         {
             Health.subtractHealth(200);
         }
@@ -395,6 +441,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     //skakanie 
     void jump()
     {
+        jumpSoundSource.PlayOneShot(jumpSound, 1F);
         rb.AddForce(Vector3.up * Jump);
     }
 
@@ -412,6 +459,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     IEnumerator teleport()
     {
+        teleportSoundSource.PlayOneShot(teleportSound, 1F);
         yield return new WaitForSeconds(1.0f);
         this.transform.position = new Vector3(rb.position.x, rb.position.y, rb.position.z + 30.0f);
     }
@@ -426,6 +474,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             other.gameObject.SetActive(false);
             coins_count++;
             coins_count_all++;
+            coinSoundSource.PlayOneShot(coinSound, 0.75f);
         }
         if (other.gameObject.CompareTag("Destructible_wall"))
         {
@@ -434,7 +483,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Spawn"))
         {
-            for(int i=0; i<5; i++)
+            zombieSpawnSoundSource.PlayOneShot(zombieSpawnSound, 1F);
+            for (int i=0; i<5; i++)
             {
                 spawn(spawnPoint ,i * 2);
                 spawn(spawnPoint6, i * 2);          
@@ -449,6 +499,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Spawn1"))
         {
+            zombieSpawnSoundSource.PlayOneShot(zombieSpawnSound, 1F);
             for (int i = 0; i < 3; i++)
             {
                 spawn(spawnPoint1, i * 3);
@@ -462,6 +513,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Spawn2"))
         {
+            zombieSpawnSoundSource.PlayOneShot(zombieSpawnSound, 1F);
             for (int i = 0; i < 3; i++)
             {
                 spawn(spawnPoint3, i * 3);
@@ -479,6 +531,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Spawn4"))
         {
+            zombieSpawnSoundSource.PlayOneShot(zombieSpawnSound, 1F);
             for (int i = 0; i < 3; i++)
             {
                 spawn(spawnPoint9, i * 2);
@@ -532,6 +585,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     //odepchniecie. Działa całkiem fajnie, ewentualnie dostosować promień i moc
     public void Push_back(float radius, float power)
     {
+        pushBackSoundSource.PlayOneShot(pushBackSound, 1F);
         Vector3 explosionPos = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
         foreach (Collider hit in colliders)
@@ -549,6 +603,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     // niewrazliwosc na x sekund
     public IEnumerator invulnerable(float x_seconds)
     {
+        barrierSoundSource.PlayOneShot(barrierSound, 1F);
         canBeHitted = false;
         yield return new WaitForSeconds(x_seconds);
         canBeHitted = true;

@@ -10,7 +10,7 @@ public class TruckMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Health.currentHealth > 0 && Lvl_1_player_movment.canBeHitted == true)
+        if(Health.currentHealth > 0)
         { 
             transform.position = new Vector3(this.transform.position.x + 0.5f, this.transform.position.y, this.transform.position.z);
             back();
