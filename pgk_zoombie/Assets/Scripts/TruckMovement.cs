@@ -20,6 +20,6 @@ public class TruckMovement : MonoBehaviour {
     void back()
     {
         if (this.transform.position.x >= 35)
-            transform.position = new Vector3(-30, this.transform.position.y, this.transform.position.z);
+            transform.position = new Vector3(-40, this.transform.position.y, this.transform.position.z);
     }
 }

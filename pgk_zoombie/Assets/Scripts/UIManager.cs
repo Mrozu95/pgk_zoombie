@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
     public Text tekstSkill1;
     public Text tekstSkill2;
     public Text tekstSkill3;
+    public Lvl_1_player_movment player;
 
     // Use this for initialization
     void Start () {
@@ -20,7 +21,7 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         setSkillsLetters();
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && player.canPause == true)
         {
             if (Time.timeScale == 1)
             {
@@ -28,7 +29,7 @@ public class UIManager : MonoBehaviour {
                 pauseState = true;
                 showPaused();
             }
-            else if (Time.timeScale == 0)
+            else if (Time.timeScale == 0 && player.canPause == true)
             {
                 Debug.Log("high");
                 Time.timeScale = 1;
@@ -99,15 +100,15 @@ public class UIManager : MonoBehaviour {
     {
         if(Lvl_1_player_movment.sterowanie == true)
         {
-            tekstSkill1.text = "Z" + System.Environment.NewLine + "-5 coins";
-            tekstSkill2.text = "X" + System.Environment.NewLine + "-3 coins";
-            tekstSkill3.text = "C" + System.Environment.NewLine + "-3 coins";
+            tekstSkill1.text = "Z";
+            tekstSkill2.text = "X";
+            tekstSkill3.text = "C";
         }
         else
         {
-            tekstSkill1.text = "<" + System.Environment.NewLine + "-5 coins";
-            tekstSkill2.text = ">" + System.Environment.NewLine + "-3 coins"; 
-            tekstSkill3.text = "?" + System.Environment.NewLine + "-3 coins"; 
+            tekstSkill1.text = "<";
+            tekstSkill2.text = ">"; 
+            tekstSkill3.text = "?"; 
         }
     }
 }

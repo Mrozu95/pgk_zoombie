@@ -24,11 +24,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public float flashSpeed = 5.0f;
     public Color flashColour = new Color(1.0f, 0.0f, 0.0f, 0.1f);
 
-    public Image SkillShadeMiddle;
-    public Image SkillShadeRight;
-    public Image SkillShadeLeft;
-    public Color flashColour2 = new Color(0.5f, 0.5f, 0.5f, 0.4f);
-    public Color flashColour3 = new Color(1.0f, 1.0f, 1.0f, 0.01f);
+    public RawImage SkillMiddle;
+    public RawImage SkillRight;
+    public RawImage SkillLeft;
+    public Color flashColour2 = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    public Color flashColour3 = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
     public Text countText;
     public Text speedText;
@@ -71,8 +71,9 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public double distanceCovered;
     bool countTime;
-    bool finished;
+    public static bool finished;
     int zombiesCount;
+    public bool canPause;
 
     // Dodanie monety
     public void SetCountText()
@@ -129,6 +130,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         SetStatisticsText();
         countTime = true;
+        canPause = true;
         finished = false;
 
         /*max_speed = 20; STARY MOVMENT
@@ -157,6 +159,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             countTime = false;
             canMove = false;
+            canPause = false;
             anim.SetBool("IsRunning", false);
             if (this.transform.eulerAngles.x <= 75)
                 transform.Rotate(Vector3.right * deathFallSpeed * Time.deltaTime);
@@ -176,6 +179,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if(rb.position.z > 470.5)
         {
             finished = true;
+            canPause = false;
+            canMove = false;
         }
 
         damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); // po hicie zmiana z ekranu czerwonego na odmyslny
@@ -347,21 +352,21 @@ public class Lvl_1_player_movment : MonoBehaviour {
     {
         if (coins_count < 3)
         {
-            SkillShadeMiddle.color = flashColour2;
-            SkillShadeRight.color = flashColour2;
+            SkillMiddle.color = flashColour2;
+            SkillRight.color = flashColour2;
         }
         else
         {
-            SkillShadeMiddle.color = flashColour3;
-            SkillShadeRight.color = flashColour3;
+            SkillMiddle.color = flashColour3;
+            SkillRight.color = flashColour3;
         }
         if (coins_count < 5)
         {
-            SkillShadeLeft.color = flashColour2;
+            SkillLeft.color = flashColour2;
         }
         else
         {
-            SkillShadeLeft.color = flashColour3;
+            SkillLeft.color = flashColour3;
         }
     }
 
@@ -371,7 +376,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             Health.subtractHealth(200);
         }
-        if (rb.position.x > -27.0 || rb.position.x < -37.0)
+        if (rb.position.x > 27.0 || rb.position.x < -27.0)
         {
             Health.subtractHealth(200);
         }
