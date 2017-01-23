@@ -72,6 +72,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public double distanceCovered;
     bool countTime;
     bool finished;
+    int zombiesCount;
 
     // Dodanie monety
     public void SetCountText()
@@ -102,7 +103,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public void SetStatisticsText()
     {
         diamonds.text = "Diamonds collected : " + coins_count_all.ToString();
-        zombies.text = "Zombie slained : " + KillingZombies.licznik; 
+        zombies.text = "Zombie slained : " + zombiesCount; 
         distance.text = "Distance covered : " + distanceCovered.ToString() + "%";
         time.text = "Time passed : " + timeSinceLevelStarted + " s";
     }
@@ -141,7 +142,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         isitinAir();
         CheckButtons();
 
-        if (Health.currentHealth > 0 || rb.position.z < 430.5)
+        if (Health.currentHealth > 0 || rb.position.z < 470.5)
         {
             movement1();
             MapCoveredText();
@@ -164,6 +165,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         if(countTime == true && finished == false)
         {
             timeSinceLevelStarted = timeSinceLevelStarted = System.Math.Round(Time.timeSinceLevelLoad,2).ToString();
+            zombiesCount = KillingZombies.licznik;
         }
 
         if (inAir == false)
@@ -365,11 +367,11 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void DeadWhenFall()
     {
-        if(rb.position.y < 37.0)
+        if(rb.position.y < 27.0)
         {
             Health.subtractHealth(200);
         }
-        if (rb.position.x > 37.0 || rb.position.x < -37.0)
+        if (rb.position.x > -27.0 || rb.position.x < -37.0)
         {
             Health.subtractHealth(200);
         }
