@@ -27,7 +27,7 @@ public class Teleporter : MonoBehaviour {
 
     public void teleporterControl()
     {
-        if ((Input.GetKeyDown(KeyCode.Z) && coins_count >= 5) || (Input.GetKeyDown(KeyCode.Comma) && coins_count >= 5)) // sprawdzanie przycisku C
+        if ((Input.GetKeyDown(KeyCode.Z) && coins_count >= 5 && Lvl_1_player_movment.sterowanie==true) || (Input.GetKeyDown(KeyCode.Comma) && coins_count >= 5 && Lvl_1_player_movment.sterowanie==false)) // sprawdzanie przycisku C
         {
             anim.SetTrigger("teleport");
         }

@@ -36,6 +36,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Slider sliderMap;
 
     public static int coins_count;
+    public static int coins_count_all;
 
     public GameObject summon;
     public Transform summonTransform;
@@ -80,7 +81,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void MapCoveredText()
     {
-        distanceCovered = System.Math.Round(rb.position.z / 434 * 100);
+        distanceCovered = System.Math.Round(rb.position.z / 470 * 100);
         if (distanceCovered < 0)
         {
             distanceCovered = 0;
@@ -100,9 +101,10 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
     public void SetStatisticsText()
     {
-        diamonds.text = "Diamonds collected: " + coins_count.ToString();
-        distance.text = "Distance covered: " + distanceCovered.ToString() + "%";
-        time.text = "Time passed: " + timeSinceLevelStarted + " s";
+        diamonds.text = "Diamonds collected : " + coins_count_all.ToString();
+        zombies.text = "Zombie slained : " + KillingZombies.licznik; 
+        distance.text = "Distance covered : " + distanceCovered.ToString() + "%";
+        time.text = "Time passed : " + timeSinceLevelStarted + " s";
     }
 
     // Use this for initialization
@@ -112,6 +114,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         anim = GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider>();
         coins_count = 0; // początkowa ilośc monetek
+        coins_count_all = 0;
         SetCountText();
         MapCoveredText();
         SetSlider();
@@ -160,7 +163,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
 
         if(countTime == true && finished == false)
         {
-            timeSinceLevelStarted = timeSinceLevelStarted = Time.timeSinceLevelLoad.ToString();
+            timeSinceLevelStarted = timeSinceLevelStarted = System.Math.Round(Time.timeSinceLevelLoad,2).ToString();
         }
 
         if (inAir == false)
@@ -415,6 +418,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             coins_count++;
+            coins_count_all++;
         }
         if (other.gameObject.CompareTag("Destructible_wall"))
         {

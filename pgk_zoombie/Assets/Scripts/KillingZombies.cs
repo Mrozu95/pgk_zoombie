@@ -6,6 +6,7 @@ public class KillingZombies : MonoBehaviour {
 
     public Text killedZombiestext;
     private int zombiesAmount;
+    public static int licznik = 0;
 
 
     // Use this for initialization
@@ -30,6 +31,8 @@ public class KillingZombies : MonoBehaviour {
             killedZombiestext.text = transform.childCount - 1 + " ZOMBIES LEFT";
             zombiesAmount = transform.childCount;
             StartCoroutine(wait(2));
+            licznik++;
+            
         }
         else if (zombiesAmount < transform.childCount)
         {

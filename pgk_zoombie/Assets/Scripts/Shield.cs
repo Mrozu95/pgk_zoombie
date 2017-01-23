@@ -28,7 +28,7 @@ public class Shield : MonoBehaviour {
 
     public void shieldControl()
     {
-        if ((Input.GetKeyDown(KeyCode.C) && coins_count >= 3) || (Input.GetKeyDown(KeyCode.Slash) && coins_count >= 3)) // sprawdzanie przycisku C
+        if ((Input.GetKeyDown(KeyCode.C) && coins_count >= 3 && Lvl_1_player_movment.sterowanie==true) || (Input.GetKeyDown(KeyCode.Slash) && coins_count >= 3 && Lvl_1_player_movment.sterowanie==false))  // sprawdzanie przycisku C
         {
             anim.SetTrigger("Up");
         }

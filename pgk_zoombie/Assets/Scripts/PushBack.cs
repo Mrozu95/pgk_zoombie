@@ -27,7 +27,7 @@ public class PushBack : MonoBehaviour {
 
     public void teleporterControl()
     {
-        if ((Input.GetKeyDown(KeyCode.X) && coins_count >= 3) || (Input.GetKeyDown(KeyCode.Period) && coins_count >= 3)) // sprawdzanie przycisku C
+        if ((Input.GetKeyDown(KeyCode.X) && coins_count >= 3 && Lvl_1_player_movment.sterowanie==true) || (Input.GetKeyDown(KeyCode.Period) && coins_count >= 3 && Lvl_1_player_movment.sterowanie==false)) // sprawdzanie przycisku C
         {
             anim.SetTrigger("push");
         }
