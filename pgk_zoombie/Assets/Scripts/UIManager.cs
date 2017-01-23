@@ -111,4 +111,9 @@ public class UIManager : MonoBehaviour {
             tekstSkill3.text = "?"; 
         }
     }
+
+    public void closeApp()
+    {
+        Application.Quit();
+    }
 }
