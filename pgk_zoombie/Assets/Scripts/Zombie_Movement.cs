@@ -21,7 +21,7 @@ public class Zombie_Movement : MonoBehaviour {
     {
         zombieHitSoundSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>(); // tak dziala nasz movment z new rigidbody nie dzialalo
-        zoombie_speed = 0.14f;
+        zoombie_speed = 0.17f;
         stop = false;
         UIManager.pauseState = false;
         agent = GetComponent<NavMeshAgent>();

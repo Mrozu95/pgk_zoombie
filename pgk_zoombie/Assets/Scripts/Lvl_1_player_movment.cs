@@ -11,14 +11,14 @@ public class Lvl_1_player_movment : MonoBehaviour {
     public Rigidbody rb;
     private Vector3 movementDirection;
 
-    public float speed = 150f;
+    public float speed = 143f;
     public float Jump; // wysokosc skoku
     bool inAir;
     public static bool canBeHitted; // czy mozna nas uderzyc
     bool slowed; // zmienna do spowalniaczy/wody
     public static bool sterowanie = true; // zmienna do zmiany sterowania dla tru sztrzalki dla false wsad
-    public static bool flagaGameOverSound = true;
-    public static bool flagaVictorySound = true;
+    public static bool flagaGameOverSound;
+    public static bool flagaVictorySound;
 
     Animator anim;
 
@@ -171,6 +171,8 @@ public class Lvl_1_player_movment : MonoBehaviour {
         slowed = false;
         movementDirection = new Vector3();
         canMove = true;
+        flagaGameOverSound = true;
+        flagaVictorySound = true;
 
         SetStatisticsText();
         countTime = true;
@@ -266,7 +268,7 @@ public class Lvl_1_player_movment : MonoBehaviour {
             if (slowed == false)
             {
                 movementDirection.Set(moveHorizontal, 0, moveVertical);
-                movementDirection = movementDirection * 10 * Time.deltaTime; //20 - szybkosc
+                movementDirection = movementDirection * 7 * Time.deltaTime; //20 - szybkosc
                 
                 if (this.transform.position.z <= -10)
                 {
